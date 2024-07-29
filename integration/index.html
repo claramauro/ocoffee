@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>O'Coffee</title>
+
+        <link rel="stylesheet" href="/css/reset.css" />
+        <link rel="stylesheet" href="/css/style.css" />
+
+        <script src="/js/app.js" defer></script>
+    </head>
+    <body>
+        <header class="header">
+            <div class="header__container">
+                <div class="header__brand">
+                    <img class="header__brand__logo" src="/images/logo.svg" alt="Logo de O'Coffee" />
+                    <h1 class="header__brand__title">O'coffee</h1>
+                </div>
+                <button aria-label="Ouvrir ou fermer le menu de navigation" class="btn btn--mobile-menu" id="btn-menu">
+                    <img src="/images/burger-menu.svg" alt="">
+                </button>
+                <div class="header__menu header__menu--desktop">
+                    <nav class="header__menu__nav">
+                        <ul class="nav__list">
+                            <li class="nav__list__item">
+                                <a class="nav__link" href="/" title="Page d'accueil">Accueil</a>
+                            </li>
+                            <li class="nav__list__item">
+                                <a class="nav__link" href="/" title="Le catalogue de nos produits">Catalogue</a>
+                            </li>
+                            <li class="nav__list__item">
+                                <a class="nav__link" href="/" title="La boutique">Boutique</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <div class="header__menu header__menu--mobile" id="mobile-menu">
+            <nav>
+                <ul class="nav__list">
+                    <li class="nav__list__item">
+                        <a class="nav__link" href="/" title="Page d'accueil">Accueil</a>
+                    </li>
+                    <li class="nav__list__item">
+                        <a class="nav__link" href="/" title="Le catalogue de nos produits">Catalogue</a>
+                    </li>
+                    <li class="nav__list__item">
+                        <a class="nav__link" href="/" title="La boutique">Boutique</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <div class="container">
+            <main>
+                <section>
+                    <h2>Qui sommes-nous ?</h2>
+                    <p>
+                        Jean et Jacques Pepper, deux frères passionnés par le café, sont
+                        les fondateurs de notre boutique. Avec une expertise approfondie
+                        et un amour profond pour cette délicieuse boisson, ils ont créé
+                        un espace où le café est célébré comme une expérience raffinée
+                        et inspirante.
+                    </p>
+                    <a href="/catalogue" title="Le catalogue de nos produits">Voir le catalogue</a>
+                    <div>
+                        <img src="/images/accueil.png" alt="">
+                    </div>
+                </section>
+    
+                <section>
+                    <h2>Nouveautés</h2>
+                    <ul>
+                        <li>
+                            <h3>Columbian</h3>
+                            <p>
+                                Café moyennement corsé avec une acidité vive et une saveur riche.
+                            </p>
+                            <a href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
+                        </li>
+                        <li>
+                            <h3>Ethiopian Yirgacheffe</h3>
+                            <p>
+                                Réputé pour son arôme floral, son acidité vive et ses notes de saveur citronnée.
+                            </p>
+                            <a href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
+                        </li>
+                        <li>
+                            <h3>Brazilian Santos</h3>
+                            <p>
+                                Café doux et lisse avec un profil de saveur de noisette.
+                            </p>
+                            <a href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+    
+        </div>
+        <footer>
+            <p>O'clock - 2024</p>
+        </footer>
+    </body>
+</html>
