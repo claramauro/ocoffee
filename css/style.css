@@ -29,6 +29,7 @@ h3 {
 }
 
 h1 {
+    font-family: "Playfair Display", serif;
     font-size: 2.5rem;
 }
 
@@ -39,6 +40,7 @@ h2 {
 }
 
 h3 {
+    font-family: "Playfair Display", serif;
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
 }
@@ -59,6 +61,7 @@ em {
     font-style: italic;
 }
 
+/* Common CSS*/
 .btn {
     background-color: var(--tertiary);
     border: 1px solid var(--secondary);
@@ -76,7 +79,20 @@ em {
 }
 
 .container {
-    margin: 2rem 2rem 3.5rem;
+    margin: 2rem auto 3.5rem;
+    padding: 0 2rem;
+    max-width: 1000px;
+}
+
+footer {
+    color: #fff;
+    background-color: var(--secondary);
+    padding: 1.25rem;
+}
+
+footer p {
+    margin: 0;
+    text-align: center;
 }
 
 /* Header */
@@ -154,10 +170,11 @@ em {
     display: block;
 }
 
-/* Section Nouveauté (news) */
+/* Sections Nouveauté (news) et Catalogue*/
 .articles__list {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
     row-gap: 2rem;
 }
@@ -176,20 +193,49 @@ em {
     padding: 0 2rem;
 }
 
-footer {
-    color: #fff;
-    background-color: var(--secondary);
-    padding: 1.25rem;
+/* Section banner (page catalogue) */
+.banner__container {
+    position: relative;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-footer p {
-    margin: 0;
+.banner__container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url(../images/banner.png) no-repeat center;
+    background-size: cover;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.banner__title {
+    position: relative;
+    z-index: 1;
+    color: var(--secondary);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 2rem;
+    align-self: auto; /* Annuler le align-self : flex-start sur les h2*/
+}
+
+/* Section catalogue */
+.section__catalogue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 3rem;
+    margin-top: 3.5rem;
+}
+
+.btn--show-more {
     text-align: center;
-}
-
-/* JS */
-.hidden {
-    display: none;
 }
 
 @media (min-width: 992px) {
@@ -234,4 +280,9 @@ footer p {
             100% / 3 - (2rem * 2 / 3)
         ); /*2rem = column-gap de articles__list */
     }
+}
+
+/* JS */
+.hidden {
+    display: none;
 }
