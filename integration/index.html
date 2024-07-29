@@ -3,7 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>O'Coffee</title>
+
+        <meta name="description" content="La boutique de café haut de gamme des frères Pepper, une référence pour les amateurs de café de la région de la ville de Hauts-de-Cloques. Un espace chaleureux et accueillant ou ont été sélectionné avec soin les meilleurs grains de café issus de plantations durables et équitables.">
+        <title>oCoffee - boutique de café haut de gamme</title>
 
         <link rel="stylesheet" href="/css/reset.css" />
         <link rel="stylesheet" href="/css/style.css" />
@@ -15,86 +17,84 @@
             <div class="header__container">
                 <div class="header__brand">
                     <img class="header__brand__logo" src="/images/logo.svg" alt="Logo de O'Coffee" />
-                    <h1 class="header__brand__title">O'coffee</h1>
+                    <h1 class="header__brand__title">oCoffee</h1>
                 </div>
-                <button aria-label="Ouvrir ou fermer le menu de navigation" class="btn btn--mobile-menu" id="btn-menu">
+                <button class="btn--mobile-menu" id="btn-menu" aria-label="Ouvrir ou fermer le menu de navigation" aria-expanded="false" aria-controls="mobile-menu">
                     <img src="/images/burger-menu.svg" alt="">
                 </button>
-                <div class="header__menu header__menu--desktop">
-                    <nav class="header__menu__nav">
-                        <ul class="nav__list">
-                            <li class="nav__list__item">
-                                <a class="nav__link" href="/" title="Page d'accueil">Accueil</a>
-                            </li>
-                            <li class="nav__list__item">
-                                <a class="nav__link" href="/" title="Le catalogue de nos produits">Catalogue</a>
-                            </li>
-                            <li class="nav__list__item">
-                                <a class="nav__link" href="/" title="La boutique">Boutique</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                <nav class="header__menu header__menu--desktop">
+                    <ul class="nav__list">
+                        <li class="nav__list__item">
+                            <a class="nav__link" href="/" title="Page d'accueil" aria-current="true">Accueil</a>
+                        </li>
+                        <li class="nav__list__item">
+                            <a class="nav__link" href="/" title="Le catalogue de nos produits">Catalogue</a>
+                        </li>
+                        <li class="nav__list__item">
+                            <a class="nav__link" href="/" title="La boutique">Boutique</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </header>
 
-        <div class="header__menu header__menu--mobile" id="mobile-menu">
-            <nav>
-                <ul class="nav__list">
-                    <li class="nav__list__item">
-                        <a class="nav__link" href="/" title="Page d'accueil">Accueil</a>
-                    </li>
-                    <li class="nav__list__item">
-                        <a class="nav__link" href="/" title="Le catalogue de nos produits">Catalogue</a>
-                    </li>
-                    <li class="nav__list__item">
-                        <a class="nav__link" href="/" title="La boutique">Boutique</a>
-                    </li>
-                </ul>
-            </nav>
+        <nav class="header__menu header__menu--mobile hidden" id="mobile-menu" aria-hidden="true">
+            <ul class="nav__list">
+                <li class="nav__list__item">
+                    <a class="nav__link" href="/" title="Page d'accueil" aria-current="true">Accueil</a>
+                </li>
+                <li class="nav__list__item">
+                    <a class="nav__link" href="/" title="Le catalogue de nos produits">Catalogue</a>
+                </li>
+                <li class="nav__list__item">
+                    <a class="nav__link" href="/" title="La boutique">Boutique</a>
+                </li>
+            </ul>
+        </nav>
 
-        </div>
 
         <div class="container">
             <main>
-                <section>
-                    <h2>Qui sommes-nous ?</h2>
-                    <p>
-                        Jean et Jacques Pepper, deux frères passionnés par le café, sont
-                        les fondateurs de notre boutique. Avec une expertise approfondie
-                        et un amour profond pour cette délicieuse boisson, ils ont créé
-                        un espace où le café est célébré comme une expérience raffinée
-                        et inspirante.
-                    </p>
-                    <a href="/catalogue" title="Le catalogue de nos produits">Voir le catalogue</a>
-                    <div>
-                        <img src="/images/accueil.png" alt="">
+                <section class="section__hero">
+                    <div class="hero__img">
+                        <img src="/images/134009550.png" alt="">
+                    </div>
+                    <div class="hero__content">
+                        <h2>Qui sommes-nous ?</h2>
+                        <p>
+                            Jean et Jacques Pepper, deux frères <em>passionnés</em> par le café, sont
+                            les fondateurs de notre boutique. Avec une <em>expertise approfondie</em>
+                            et un amour profond pour cette délicieuse boisson, ils ont créé
+                            un espace où le café est célébré comme une expérience raffinée
+                            et inspirante.
+                        </p>
+                        <a class="btn" href="/catalogue" title="Le catalogue de nos produits">Voir le catalogue</a>
                     </div>
                 </section>
     
-                <section>
+                <section class="section__news">
                     <h2>Nouveautés</h2>
-                    <ul>
-                        <li>
-                            <h3>Columbian</h3>
-                            <p>
+                    <ul class="articles__list">
+                        <li class="card">
+                            <h3 class="card__title">Columbian</h3>
+                            <p class="card__text">
                                 Café moyennement corsé avec une acidité vive et une saveur riche.
                             </p>
-                            <a href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
+                            <a class="card__link btn" href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
                         </li>
-                        <li>
-                            <h3>Ethiopian Yirgacheffe</h3>
-                            <p>
+                        <li class="card">
+                            <h3 class="card__title">Ethiopian Yirgacheffe</h3>
+                            <p class="card__text">
                                 Réputé pour son arôme floral, son acidité vive et ses notes de saveur citronnée.
                             </p>
-                            <a href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
+                            <a class="card__link btn" href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
                         </li>
-                        <li>
-                            <h3>Brazilian Santos</h3>
-                            <p>
+                        <li class="card">
+                            <h3 class="card__title">Brazilian Santos</h3>
+                            <p class="card__text">
                                 Café doux et lisse avec un profil de saveur de noisette.
                             </p>
-                            <a href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
+                            <a class="card__link btn" href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
                         </li>
                     </ul>
                 </section>
