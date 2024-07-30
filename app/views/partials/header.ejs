@@ -38,7 +38,7 @@
                     <img class="header__brand__logo" src="/images/logo.svg" alt="Logo de O'Coffee" />
                     <h1 class="header__brand__title">oCoffee</h1>
                 </div>
-                <button class="btn--mobile-menu" id="btn-menu" aria-label="Ouvrir ou fermer le menu de navigation" aria-expanded="false" aria-controls="mobile-menu">
+                <button class="btn--mobile-menu" id="btn-menu" type="button" aria-label="Ouvrir ou fermer le menu de navigation" aria-expanded="false" aria-controls="mobile-menu">
                     <img src="/images/burger-menu.svg" alt="">
                 </button>
                 <nav class="header__menu header__menu--desktop">
@@ -47,7 +47,7 @@
                             <a class="nav__link" href="/" title="Page d'accueil" <% if (page === 'index') { %> aria-current="true" <% } %> >Accueil</a>
                         </li>
                         <li class="nav__list__item">
-                            <a class="nav__link" href="/catalogue" title="Le catalogue de nos produits" <% if (page === 'catalogue') { %> aria-current="true" <% } %> >Catalogue</a>
+                            <a class="nav__link" href="/catalog" title="Le catalogue de nos produits" <% if (page === 'catalog') { %> aria-current="true" <% } %> >Catalogue</a>
                         </li>
                         <li class="nav__list__item">
                             <a class="nav__link" href="/store" title="La boutique" <% if (page === 'store') { %> aria-current="true" <% } %> >Boutique</a>
@@ -63,7 +63,7 @@
                     <a class="nav__link" href="/" title="Page d'accueil" <% if (page === 'index') { %> aria-current="true" <% } %> >Accueil</a>
                 </li>
                 <li class="nav__list__item">
-                    <a class="nav__link" href="/catalogue" title="Le catalogue de nos produits" <% if (page === 'catalogue') { %> aria-current="true" <% } %> >Catalogue</a>
+                    <a class="nav__link" href="/catalog" title="Le catalogue de nos produits" <% if (page === 'catalog') { %> aria-current="true" <% } %> >Catalogue</a>
                 </li>
                 <li class="nav__list__item">
                     <a class="nav__link" href="/store" title="La boutique" <% if (page === 'store') { %> aria-current="true" <% } %>>Boutique</a>

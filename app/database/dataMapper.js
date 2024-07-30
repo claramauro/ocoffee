@@ -7,9 +7,18 @@ const dataMapper = {
      */
     getLatestProducts: async (nbOfProducts) => {
         const query = {
-            text: `SELECT id, name, reference, main_feature FROM coffee ORDER BY publication_date DESC LIMIT $1`,
+            text: `SELECT name, reference, main_feature FROM coffee ORDER BY publication_date DESC LIMIT $1`,
             values: [nbOfProducts],
         };
+        const result = await client.query(query);
+        return result.rows;
+    },
+    /**
+     * Retourne tous les produits
+     * @returns {Promise<Array>}
+     */
+    getAllProducts: async () => {
+        const query = "SELECT name, reference, main_feature FROM coffee";
         const result = await client.query(query);
         return result.rows;
     },
