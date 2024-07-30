@@ -1,0 +1,11 @@
+.section__catalogue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 3rem;
+    margin-top: 3.5rem;
+}
+
+.btn--show-more {
+    text-align: center;
+}

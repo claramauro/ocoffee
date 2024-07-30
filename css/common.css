@@ -1,0 +1,147 @@
+h1,
+h2,
+h3 {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 2rem 0;
+    align-self: start;
+}
+
+h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+em {
+    color: var(--secondary);
+    font-weight: 600;
+    font-style: italic;
+}
+
+.container {
+    margin: 2rem auto 3.5rem;
+    padding: 0 2rem;
+    max-width: 1000px;
+}
+
+.header {
+    padding: 0.6rem 1.25rem;
+}
+
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__brand {
+    display: flex;
+    align-items: center;
+}
+
+.header__brand__logo {
+    width: 20%;
+}
+
+.header__menu--desktop {
+    display: none;
+}
+
+.btn--mobile-menu {
+    display: flex;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+.btn--mobile-menu img {
+    transition: transform 0.3s;
+    width: 2.2rem;
+}
+
+.btn--mobile-menu:hover img {
+    transform: rotate(90deg);
+}
+
+.nav__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 2rem;
+}
+
+.header__menu--mobile .nav__list {
+    flex-direction: column;
+    row-gap: 1.5rem;
+}
+
+.nav__link {
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding-bottom: 0.7em;
+}
+
+.header__menu--desktop .nav__link:hover,
+.active {
+    border-bottom: 1px solid var(--primary);
+}
+
+section {
+    margin-bottom: 3rem;
+}
+
+section:last-child {
+    margin-bottom: 0;
+}
+
+footer {
+    color: #fff;
+    background-color: var(--secondary);
+    padding: 1.25rem;
+}
+
+footer p {
+    margin: 0;
+    text-align: center;
+}
+
+@media (min-width: 992px) {
+    h2 {
+        align-self: auto;
+    }
+
+    .btn--mobile-menu,
+    .header__menu--mobile {
+        display: none;
+    }
+
+    .header__menu--desktop {
+        display: block;
+    }
+}
+
+/* JS */
+.hidden {
+    display: none;
+}

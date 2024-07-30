@@ -1,0 +1,13 @@
+.section__banner--store .banner__container::after {
+    background-image: url(../images/store-banner.jpg);
+}
+
+.store__address {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.store__map iframe {
+    width: 100%;
+}
