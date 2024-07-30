@@ -25,7 +25,6 @@ function errorHandler(err, req, res, next) {
     res.status(status).render("error", {
         error: err.message,
         status: status,
-        page: "error",
     });
 }
 
