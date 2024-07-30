@@ -2,8 +2,8 @@ const path = require("node:path");
 
 const mainController = {
     homePage: (req, res) => {
-        res.sendFile("index.html", {
-            root: path.join(__dirname, "../../integration"),
+        res.render("index", {
+            title: "oCoffee - boutique de café haut de gamme",
         });
     },
     storePage: (req, res) => {
