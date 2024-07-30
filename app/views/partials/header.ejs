@@ -5,9 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <meta name="description" content="La boutique de café haut de gamme des frères Pepper, une référence pour les amateurs de café de la région de la ville de Hauts-de-Cloques. Un espace chaleureux et accueillant ou ont été sélectionné avec soin les meilleurs grains de café issus de plantations durables et équitables.">
-        <title><%= title %></title>
+        <title>
+            <% if (locals.title) { %>
+                <%= title %>
+            <% } else { %>
+                oCoffee - boutique de café haut de gamme
+            <% } %>
+                 
+        </title>
 
-        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +27,7 @@
         <link rel="stylesheet" href="/css/common.css" />
 
         <!-- Style -->
-        <link rel="stylesheet" href="/css/index.css" />
+        <link rel="stylesheet" href="/css/<%= page %>.css" />
 
         <script src="/js/app.js" defer></script>
     </head>
@@ -37,13 +44,13 @@
                 <nav class="header__menu header__menu--desktop">
                     <ul class="nav__list">
                         <li class="nav__list__item">
-                            <a class="nav__link active" href="/" title="Page d'accueil" aria-current="true">Accueil</a>
+                            <a class="nav__link" href="/" title="Page d'accueil" <% if (page === 'index') { %> aria-current="true" <% } %> >Accueil</a>
                         </li>
                         <li class="nav__list__item">
-                            <a class="nav__link" href="/products" title="Le catalogue de nos produits">Catalogue</a>
+                            <a class="nav__link" href="/catalogue" title="Le catalogue de nos produits" <% if (page === 'catalogue') { %> aria-current="true" <% } %> >Catalogue</a>
                         </li>
                         <li class="nav__list__item">
-                            <a class="nav__link" href="/store" title="La boutique">Boutique</a>
+                            <a class="nav__link" href="/store" title="La boutique" <% if (page === 'store') { %> aria-current="true" <% } %> >Boutique</a>
                         </li>
                     </ul>
                 </nav>
@@ -53,13 +60,13 @@
         <nav class="header__menu header__menu--mobile hidden" id="mobile-menu" aria-hidden="true">
             <ul class="nav__list">
                 <li class="nav__list__item">
-                    <a class="nav__link" href="/" title="Page d'accueil" aria-current="true">Accueil</a>
+                    <a class="nav__link" href="/" title="Page d'accueil" <% if (page === 'index') { %> aria-current="true" <% } %> >Accueil</a>
                 </li>
                 <li class="nav__list__item">
-                    <a class="nav__link" href="/products" title="Le catalogue de nos produits">Catalogue</a>
+                    <a class="nav__link" href="/catalogue" title="Le catalogue de nos produits" <% if (page === 'catalogue') { %> aria-current="true" <% } %> >Catalogue</a>
                 </li>
                 <li class="nav__list__item">
-                    <a class="nav__link" href="/store" title="La boutique">Boutique</a>
+                    <a class="nav__link" href="/store" title="La boutique" <% if (page === 'store') { %> aria-current="true" <% } %>>Boutique</a>
                 </li>
             </ul>
         </nav>

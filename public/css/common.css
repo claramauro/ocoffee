@@ -103,7 +103,7 @@ em {
 }
 
 .header__menu--desktop .nav__link:hover,
-.active {
+.header__menu--desktop .nav__link[aria-current="true"] {
     border-bottom: 1px solid var(--primary);
 }
 

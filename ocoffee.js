@@ -8,6 +8,10 @@ const app = express();
 // imports
 const path = require("node:path");
 const { router } = require("./app/router");
+const {
+    notFound,
+    errorHandler,
+} = require("./app/middlewares/errorHandlers.js");
 
 // Config dossier public
 const securePathToAssets = path.join(__dirname, "public");
@@ -19,6 +23,10 @@ app.set("view engine", "ejs");
 app.set("views", securePathToViews);
 
 app.use(router);
+
+app.use(notFound);
+
+app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

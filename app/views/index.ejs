@@ -15,49 +15,29 @@
                     un espace où le café est célébré comme une expérience raffinée
                     et inspirante.
                 </p>
-                <a class="btn" href="/products" title="Le catalogue de nos produits">Voir le catalogue</a>
+                <a class="btn" href="/catalogue" title="Le catalogue de nos produits">Voir le catalogue</a>
             </div>
         </section>
 
         <section class="section__news">
-            <h2>Nouveautés</h2>
-            <ul class="articles__list">
-                <li class="card">
-                    <div class="card__img">
-                        <img src="/images/691550753.png" alt="">
-                    </div>
-                    <div class="card__content">
-                        <h3 class="card__title">Columbian</h3>
-                        <p class="card__info">
-                            Caractéristique principale : Acide
-                        </p>
-                        <a class="card__link btn" href="product.html" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
-                    </div>
-                </li>
-                <li class="card">
-                    <div class="card__img">
-                        <img src="/images/100955894.png" alt="">
-                    </div>
-                    <div class="card__content">
-                        <h3 class="card__title">Ethiopian Yirgacheffe</h3>
-                        <p class="card__info">
-                            Caractéristique principale : Fruité
-                        </p>
-                        <a class="card__link btn" href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
-                    </div>
-                </li>
-                <li class="card">
-                    <div class="card__img">
-                        <img src="/images/295432730.png" alt="">
-                    </div>
-                    <div class="card__content">
-                        <h3 class="card__title">Brazilian Santos</h3>
-                        <p class="card__info">
-                            Caractéristique principale : Doux
-                        </p>
-                        <a class="card__link btn" href="#" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
-                    </div>
-                </li>
+                <% if (locals.products?.length) { %>
+                    <h2>Nouveautés</h2>
+                    <ul class="articles__list">
+                        <% for ( const product of products ) { %>
+                            <li class="card">
+                                <div class="card__img">
+                                    <img src="/images/<%= product.reference %>.png" alt="">
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><%= product.name %></h3>
+                                    <p class="card__info">
+                                        Caractéristique principale : <%= product.main_feature %>
+                                    </p>
+                                    <a class="card__link btn" href="/product/<%= product.reference %>" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
+                                </div>
+                            </li>
+                        <% } %>
+                <% } %>
             </ul>
         </section>
     </main>
