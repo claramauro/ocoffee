@@ -1,0 +1,24 @@
+{
+    "name": "ocoffee",
+    "version": "1.0.0",
+    "description": "Site vitrine de la boutique oCoffee",
+    "main": "index.js",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "dev": "nodemon ocoffee.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "ejs": "^3.1.10",
+        "express": "^4.19.2",
+        "pg": "^8.12.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.4"
+    }
+}
