@@ -4,11 +4,15 @@ const app = {
         menuBtn.addEventListener("click", app.handleClickOnBurgerIcon);
 
         const showAllBtn = document.querySelector("#btn-show-all");
-        showAllBtn.addEventListener("click", app.handleClickOnShowAllBtn);
+        if (showAllBtn) {
+            showAllBtn.addEventListener("click", app.handleClickOnShowAllBtn);
+        }
 
         app.mobileMenu = document.querySelector("#mobile-menu");
     },
     handleClickOnBurgerIcon: (e) => {
+        console.log(app.mobileMenu);
+
         if (app.mobileMenu.classList.contains("hidden")) {
             app.mobileMenu.classList.remove("hidden");
             app.mobileMenu.setAttribute("aria-hidden", "false");
@@ -26,4 +30,4 @@ const app = {
     },
 };
 
-app.init();
+document.addEventListener("DOMContentLoaded", app.init);
