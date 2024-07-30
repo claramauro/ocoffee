@@ -181,17 +181,39 @@ footer p {
 }
 
 .card {
+    border: 1px solid var(--primary);
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card__content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 80%;
-    padding: 1.25rem;
-    border: 1px solid var(--primary);
+    padding: 1rem;
+    flex: 1 0 auto;
 }
 
-.card__text {
-    padding: 0 2rem;
+.card__img {
+    height: 300px;
+}
+
+.card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.card__info {
+    flex-grow: 1;
+    font-style: italic;
+}
+
+.card__link {
+    justify-self: flex-end;
 }
 
 /* Section banner (pages catalogue & product) */
@@ -285,6 +307,16 @@ footer p {
     background-image: url(../images/store-banner.jpg);
 }
 
+.store__address {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.store__map iframe {
+    width: 100%;
+}
+
 @media (min-width: 992px) {
     h2 {
         align-self: auto;
@@ -326,6 +358,10 @@ footer p {
         width: calc(
             100% / 3 - (2rem * 2 / 3)
         ); /*2rem = column-gap de articles__list */
+    }
+
+    .card__img {
+        height: 200px;
     }
 }
 
