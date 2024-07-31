@@ -9,7 +9,7 @@ function catchError(controllerMethod) {
 }
 
 function notFound(req, res, next) {
-    const error = new Error("Not Found");
+    const error = new Error("Page not found");
     error.status = 404;
 
     // * Quand on appelle next avec un argument, express lève une erreur
