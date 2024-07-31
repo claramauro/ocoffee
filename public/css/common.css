@@ -163,7 +163,6 @@ footer p {
 }
 
 /* JS */
-.hidden,
-.hide-card {
+.hidden {
     display: none;
 }

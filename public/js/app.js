@@ -3,11 +3,6 @@ const app = {
         app.burgerBtn = document.querySelector("#burger-btn");
         app.burgerBtn.addEventListener("click", app.handleClickOnBurgerIcon);
 
-        const showAllBtn = document.querySelector("#btn-show-all");
-        if (showAllBtn) {
-            showAllBtn.addEventListener("click", app.handleClickOnShowAllBtn);
-        }
-
         app.header = document.querySelector("header");
         app.headerNav = document.querySelector("#header-nav");
 
@@ -39,11 +34,6 @@ const app = {
         app.burgerBtn.style.transform = "rotate(180deg)";
         app.burgerBtn.setAttribute("aria-expanded", "false");
         app.headerNav.setAttribute("aria-hidden", "true");
-    },
-    handleClickOnShowAllBtn: (e) => {
-        const hiddenCards = document.querySelectorAll(".card.hide-card");
-        hiddenCards.forEach((card) => card.classList.remove("hide-card"));
-        e.currentTarget.classList.add("hidden");
     },
 };
 
