@@ -33,6 +33,22 @@ const dataMapper = {
         }
         return result.rows[0];
     },
+    getCategories: async () => {
+        const query = "SELECT main_feature FROM coffee GROUP BY main_feature";
+        const result = await client.query(query);
+        return result.rows;
+    },
+    getProductsByCategory: async (category) => {
+        const query = {
+            text: `SELECT name, reference, main_feature FROM coffee WHERE main_feature = $1`,
+            values: [category],
+        };
+        const result = await client.query(query);
+        if (!result.rows.length) {
+            return null;
+        }
+        return result.rows;
+    },
 };
 
 module.exports = { dataMapper };

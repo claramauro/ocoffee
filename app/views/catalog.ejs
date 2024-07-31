@@ -8,6 +8,25 @@
             </section>
             <div class="container">
                 <section class="section__catalogue">
+
+                    <% if (locals.categories?.length) { %>
+                        <form action="/catalog/category" method="GET" id="form-category">
+                            <label class="sr-only" for="category">Filtrer par catégorie</label>
+                            <select name="category" id="category">
+                                <option value="null" disabled>Catégorie</option>
+                                <option value="all">Tous les produits</option>
+    
+                                <% for( category of categories ) { %>
+                                    <option value="<%= category.main_feature %>"
+                                        <% if(category.main_feature === locals.currentCategory) { %>
+                                            selected
+                                        <% } %>
+                                    ><%= category.main_feature %></option>
+                                <% } %>
+                            </select>
+                        </form>
+                    <% } %>
+
                     <% if (locals.products?.length) { %>
                         <ul class="articles__list">
                             <% for( product of products) { %>
@@ -25,7 +44,9 @@
                                 </li>
                             <% } %>
                         </ul>
-                        <a class="btn" id="btn-show-all" href="/catalog/all" title="Afficher tous les produits" aria-label="Afficher tous les produits">Voir tout</a>
+                        <% if (!locals.showAll) { %>
+                            <a class="btn" id="btn-show-all" href="/catalog/all" title="Afficher tous les produits" aria-label="Afficher tous les produits">Voir tout</a>
+                        <% } %>
                     <% } else { %>
                     <p>Aucun produit à afficher</p>
                     <% } %>

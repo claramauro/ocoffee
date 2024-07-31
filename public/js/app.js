@@ -7,10 +7,23 @@ const app = {
         app.headerNav = document.querySelector("#header-nav");
 
         window.addEventListener("resize", app.handleResizeWindow);
+
+        app.formCategory = document.querySelector("#form-category");
+        const selectFormCategory = document.querySelector(
+            "#form-category select"
+        );
+        if (selectFormCategory) {
+            selectFormCategory.addEventListener(
+                "change",
+                app.handleOnChangeSelectFormCategory
+            );
+        }
     },
     handleResizeWindow: (e) => {
         if (window.innerWidth >= 992) {
-            app.closeNav();
+            if (app.headerNav.classList.contains("expanded")) {
+                app.closeNav();
+            }
         }
     },
     handleClickOnBurgerIcon: (e) => {
@@ -34,6 +47,9 @@ const app = {
         app.burgerBtn.style.transform = "rotate(180deg)";
         app.burgerBtn.setAttribute("aria-expanded", "false");
         app.headerNav.setAttribute("aria-hidden", "true");
+    },
+    handleOnChangeSelectFormCategory: (e) => {
+        app.formCategory.submit();
     },
 };
 

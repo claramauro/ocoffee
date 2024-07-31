@@ -10,7 +10,8 @@ const { storeController } = require("./controller/storeController");
 router.get("/", catchError(homeController.showPage));
 
 router.get("/catalog", catchError(catalogController.showPage));
-router.get("/catalog/all", catchError(catalogController.updateSession));
+router.get("/catalog/all", catalogController.updateSession);
+router.get("/catalog/category", catchError(catalogController.showByCategory));
 
 router.get("/product/:reference(\\d+)", catchError(productController.showPage));
 
