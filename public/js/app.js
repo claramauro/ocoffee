@@ -1,29 +1,44 @@
 const app = {
     init: () => {
-        const menuBtn = document.querySelector("#btn-menu");
-        menuBtn.addEventListener("click", app.handleClickOnBurgerIcon);
+        app.burgerBtn = document.querySelector("#burger-btn");
+        app.burgerBtn.addEventListener("click", app.handleClickOnBurgerIcon);
 
         const showAllBtn = document.querySelector("#btn-show-all");
         if (showAllBtn) {
             showAllBtn.addEventListener("click", app.handleClickOnShowAllBtn);
         }
 
-        app.mobileMenu = document.querySelector("#mobile-menu");
+        app.header = document.querySelector("header");
+        app.headerNav = document.querySelector("#header-nav");
+
+        window.addEventListener("resize", app.handleResizeWindow);
+    },
+    handleResizeWindow: (e) => {
+        if (window.innerWidth >= 992) {
+            app.closeNav();
+        }
     },
     handleClickOnBurgerIcon: (e) => {
-        console.log(app.mobileMenu);
-
-        if (app.mobileMenu.classList.contains("hidden")) {
-            e.currentTarget.style.transform = "rotate(90deg)";
-            app.mobileMenu.classList.remove("hidden");
-            app.mobileMenu.setAttribute("aria-hidden", "false");
-            e.currentTarget.setAttribute("aria-expanded", "true");
+        if (!app.headerNav.classList.contains("expanded")) {
+            app.openNav();
         } else {
-            e.currentTarget.style.transform = "rotate(180deg)";
-            app.mobileMenu.classList.add("hidden");
-            app.mobileMenu.setAttribute("aria-hidden", "true");
-            e.currentTarget.setAttribute("aria-expanded", "false");
+            app.closeNav();
         }
+    },
+    openNav: () => {
+        app.headerNav.classList.add("expanded"); // Afficher la nav
+        const heightNav = app.headerNav.offsetHeight;
+        app.header.style.marginBottom = `${heightNav}px`; // nav en position absolute sur mobile, on rajoute margin bottom pour décaler le main
+        app.burgerBtn.style.transform = "rotate(90deg)";
+        app.burgerBtn.setAttribute("aria-expanded", "true");
+        app.headerNav.setAttribute("aria-hidden", "false");
+    },
+    closeNav: () => {
+        app.headerNav.classList.remove("expanded"); // Masquer la nav
+        app.header.style.marginBottom = "0";
+        app.burgerBtn.style.transform = "rotate(180deg)";
+        app.burgerBtn.setAttribute("aria-expanded", "false");
+        app.headerNav.setAttribute("aria-hidden", "true");
     },
     handleClickOnShowAllBtn: (e) => {
         const hiddenCards = document.querySelectorAll(".card.hide-card");
