@@ -1,4 +1,4 @@
-.section__banner--product .banner__container::after {
+.section__banner--product .banner__container::before {
     background-image: url(../images/product-banner.png);
 }
 

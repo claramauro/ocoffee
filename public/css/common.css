@@ -6,8 +6,10 @@ h3 {
 }
 
 h1 {
-    font-family: "Playfair Display", serif;
     font-size: 2.5rem;
+    line-height: 2.8rem;
+    margin: 2rem 0;
+    text-align: center;
 }
 
 h2 {
@@ -19,7 +21,7 @@ h2 {
 h3 {
     font-family: "Playfair Display", serif;
     font-size: 1.2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 p {
@@ -39,24 +41,28 @@ em {
 }
 
 .container {
-    margin: 2rem auto 3.5rem;
+    margin: 0 auto;
     padding: 0 2rem;
     max-width: 1000px;
 }
 
 .header {
-    padding: 0.6rem 1.25rem;
-}
-
-.header__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: auto;
+    padding: 2rem;
+    max-width: 1000px;
 }
 
 .header__brand {
     display: flex;
     align-items: center;
+    font-family: "Manrope", sans-serif;
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 5px;
 }
 
 .header__brand__logo {
@@ -80,7 +86,7 @@ em {
 }
 
 .btn--mobile-menu:hover img {
-    transform: rotate(90deg);
+    transform: scale(1.1);
 }
 
 .nav__list {
@@ -105,6 +111,10 @@ em {
 .header__menu--desktop .nav__link:hover,
 .header__menu--desktop .nav__link[aria-current="true"] {
     border-bottom: 1px solid var(--primary);
+}
+
+main {
+    margin: 0 0 3.5rem;
 }
 
 section {

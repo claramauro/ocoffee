@@ -14,10 +14,12 @@ const app = {
         console.log(app.mobileMenu);
 
         if (app.mobileMenu.classList.contains("hidden")) {
+            e.currentTarget.style.transform = "rotate(90deg)";
             app.mobileMenu.classList.remove("hidden");
             app.mobileMenu.setAttribute("aria-hidden", "false");
             e.currentTarget.setAttribute("aria-expanded", "true");
         } else {
+            e.currentTarget.style.transform = "rotate(180deg)";
             app.mobileMenu.classList.add("hidden");
             app.mobileMenu.setAttribute("aria-hidden", "true");
             e.currentTarget.setAttribute("aria-expanded", "false");

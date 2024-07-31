@@ -1,37 +1,36 @@
 <%- include('./partials/header', { page : "catalog", title : "Catalogue - oCoffee"}) %>
-
-    <div class="container">
+    
         <main>
             <section class="section__banner section__banner--catalogue">
                 <div class="banner__container">
                     <h2 class="banner__title">Le catalogue</h2>
                 </div>
             </section>
-
-            <section class="section__catalogue">
-                <% if (locals.products?.length) { %>
-                    <ul class="articles__list">
-                        <% for( let i = 0; i < products.length; i++ ) { %>
-                            <li class="card <% if (i >= 3) { %>hide-card <% } %>">
-                                <div class="card__img">
-                                    <img src="/images/<%= products[i].reference %>.png" alt="">
-                                </div>
-                                <div class="card__content">
-                                    <h3 class="card__title"><%= products[i].name %></h3>
-                                    <p class="card__info">
-                                        Caractéristique principale : <%= products[i].main_feature %>
-                                    </p>
-                                    <a class="card__link btn" href="/product/<%= products[i].reference %>" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
-                                </div>
-                            </li>
-                        <% } %>
-                    </ul>
-                    <btn class="btn btn--show-all" id="btn-show-all" type="button">Voir tout</>
-                <% } else { %>
-                <p>Aucun produit à afficher</p>
-                <% } %>
-            </section>
+            <div class="container">
+                <section class="section__catalogue">
+                    <% if (locals.products?.length) { %>
+                        <ul class="articles__list">
+                            <% for( let i = 0; i < products.length; i++ ) { %>
+                                <li class="card <% if (i >= 3) { %>hide-card <% } %>">
+                                    <div class="card__img">
+                                        <img src="/images/<%= products[i].reference %>.png" alt="">
+                                    </div>
+                                    <div class="card__content">
+                                        <h3 class="card__title"><%= products[i].name %></h3>
+                                        <p class="card__info">
+                                            Caractéristique principale : <%= products[i].main_feature %>
+                                        </p>
+                                        <a class="card__link btn" href="/product/<%= products[i].reference %>" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
+                                    </div>
+                                </li>
+                            <% } %>
+                        </ul>
+                        <btn class="btn btn--show-all" id="btn-show-all" type="button">Voir tout</>
+                    <% } else { %>
+                    <p>Aucun produit à afficher</p>
+                    <% } %>
+                </section>
+            </div>
         </main>
-    </div>
 
 <%- include('./partials/footer') %>

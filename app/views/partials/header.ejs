@@ -18,7 +18,7 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">        
         
         <!-- Common CSS Style -->
         <link rel="stylesheet" href="/css/reset.css" />
@@ -33,28 +33,26 @@
     </head>
     <body>
         <header class="header">
-            <div class="header__container">
-                <div class="header__brand">
-                    <img class="header__brand__logo" src="/images/logo.svg" alt="Logo de O'Coffee" />
-                    <h1 class="header__brand__title">oCoffee</h1>
-                </div>
-                <button class="btn--mobile-menu" id="btn-menu" type="button" aria-label="Ouvrir ou fermer le menu de navigation" aria-expanded="false" aria-controls="mobile-menu">
-                    <img src="/images/burger-menu.svg" alt="">
-                </button>
-                <nav class="header__menu header__menu--desktop">
-                    <ul class="nav__list">
-                        <li class="nav__list__item">
-                            <a class="nav__link" href="/" title="Page d'accueil" <% if (page === 'index') { %> aria-current="true" <% } %> >Accueil</a>
-                        </li>
-                        <li class="nav__list__item">
-                            <a class="nav__link" href="/catalog" title="Le catalogue de nos produits" <% if (page === 'catalog') { %> aria-current="true" <% } %> >Catalogue</a>
-                        </li>
-                        <li class="nav__list__item">
-                            <a class="nav__link" href="/store" title="La boutique" <% if (page === 'store') { %> aria-current="true" <% } %> >Boutique</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <a class="header__brand" href="/" title="Page d'accueil">
+                <img class="header__brand__logo" src="/images/logo.svg" alt="Logo de oCoffee" />
+                O'COFFEE
+            </a>
+            <button class="btn--mobile-menu" id="btn-menu" type="button" aria-label="Ouvrir ou fermer le menu de navigation" aria-expanded="false" aria-controls="mobile-menu">
+                <img src="/images/burger-menu.svg" alt="">
+            </button>
+            <nav class="header__menu header__menu--desktop">
+                <ul class="nav__list">
+                    <li class="nav__list__item">
+                        <a class="nav__link" href="/" title="Page d'accueil" <% if (page === 'index') { %> aria-current="true" <% } %> >Accueil</a>
+                    </li>
+                    <li class="nav__list__item">
+                        <a class="nav__link" href="/catalog" title="Le catalogue de nos produits" <% if (page === 'catalog') { %> aria-current="true" <% } %> >Catalogue</a>
+                    </li>
+                    <li class="nav__list__item">
+                        <a class="nav__link" href="/store" title="La boutique" <% if (page === 'store') { %> aria-current="true" <% } %> >Boutique</a>
+                    </li>
+                </ul>
+            </nav>
         </header>
 
         <nav class="header__menu header__menu--mobile hidden" id="mobile-menu" aria-hidden="true">
