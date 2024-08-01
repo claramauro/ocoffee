@@ -18,6 +18,11 @@ const app = {
                 app.handleOnChangeSelectFormCategory
             );
         }
+
+        const cards = document.querySelectorAll(".card");
+        cards.forEach((card) => {
+            card.addEventListener("focusin", app.handleFocusOnCardBtn);
+        });
     },
     handleResizeWindow: (e) => {
         if (window.innerWidth >= 992) {
@@ -50,6 +55,11 @@ const app = {
     },
     handleOnChangeSelectFormCategory: (e) => {
         app.formCategory.submit();
+    },
+    handleFocusOnCardBtn: (e) => {
+        const divContent = e.currentTarget.querySelector(".card__content");
+        divContent.classList.add("up");
+        // Empecher le transform du hover si le focus au clavier est deja passé sur la card
     },
 };
 

@@ -31,11 +31,11 @@
                         <ul class="articles__list">
                             <% for( product of products) { %>
                                 <li class="card ">
-                                    <div class="card__img">
+                                    <div class="card__img" data-img="/images/<%= product.reference %>.png">
                                         <img src="/images/<%= product.reference %>.png" alt="">
                                     </div>
-                                    <h3 class="card__title"><%= product.name %></h3>
                                     <div class="card__content">
+                                        <h3 class="card__title"><%= product.name %></h3>
                                         <p class="card__info">
                                             Caractéristique principale : <%= product.main_feature %>
                                         </p>
