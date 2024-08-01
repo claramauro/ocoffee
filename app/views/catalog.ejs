@@ -44,7 +44,7 @@
                                 </li>
                             <% } %>
                         </ul>
-                        <% if (!locals.showAll) { %>
+                        <% if (!locals.showAll && locals.currentCategory === undefined) { %>
                             <a class="btn" id="btn-show-all" href="/catalog/all" title="Afficher tous les produits" aria-label="Afficher tous les produits">Voir tout</a>
                         <% } %>
                     <% } else { %>
