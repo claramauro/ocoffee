@@ -13,14 +13,13 @@
 @media (min-width: 992px) {
     .section__hero {
         display: flex;
-        column-gap: 2rem;
+        column-gap: 4rem;
         align-items: center;
     }
 
     .hero__content {
-        width: calc(50% - 2rem / 2); /* 2rem = column-gap de section__hero */
+        width: calc(50% - 4rem / 2); /* 2rem = column-gap de section__hero */
         flex: none;
-        padding: 0 2rem;
     }
 
     .hero__img {
