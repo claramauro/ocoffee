@@ -1,0 +1,50 @@
+<%- include('./partials/header', { page : "admin", title : "Ajouter un produit - oCoffee"}) %>
+
+<main>
+    <div class="container">
+        <h2>Ajouter un produit - Page Admin</h2>
+        <form class="form-add-product" action="/admin/product/add" method="POST" enctype="multipart/form-data">
+            <% if (locals.error) { %>
+                <span class="error__message"><%= error %></span>
+            <% } %>
+
+            <div class="form__group">
+                <label for="name">Nom du produit :</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div class="form__group">
+                <label for="reference">Référence : </label>
+                <input type="number" name="reference" id="reference" max="999999999" placeholder="Référence à 9 chiffres" required>
+            </div>
+            <div class="form__group">
+                <label for="origin">Origine : </label>
+                <input type="text" name="origin" id="origin" required>
+            </div>
+            <div class="form__group">
+                <label for="price_kilo">Prix au kilo : </label>
+                <input type="number" name="price_kilo" id="price_kilo" step="0.01" required>
+            </div>
+            <div class="form__group">
+                <label for="main_feature">Caractéristique principale : </label>
+                <input type="text" name="main_feature" id="main_feature" required>
+            </div>
+            <div class="form__group form__group--row">
+                <label for="availability">Disponible : </label>
+                <input type="checkbox" name="availability" id="availability" checked>
+            </div>
+            <div class="form__group">
+                <label for="description">Description : </label>
+                <textarea name="description" id="description" required></textarea>
+            </div>
+            <div class="form__group">
+                <label for="image">Ajouter l'image</label>
+                <input type="file" id="image" name="image" accept="image/png" required>
+            </div>
+            <button class="btn" type="submit">Ajouter</button>
+        </form>
+        
+    </div>
+
+</main>
+
+<%- include('./partials/footer') %>

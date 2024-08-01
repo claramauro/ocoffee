@@ -8,6 +8,7 @@ const app = express();
 // imports
 const path = require("node:path");
 const session = require("express-session");
+const bcrypt = require("bcrypt");
 const { router } = require("./app/router");
 const {
     notFound,
@@ -36,6 +37,13 @@ app.use(
         },
     })
 );
+
+// const mdp = "admin";
+// const passwordHash = bcrypt.hashSync(mdp, 11);
+// console.log(passwordHash);
+
+// parser req.body
+app.use(express.urlencoded({ extended: false }));
 
 app.use(router);
 

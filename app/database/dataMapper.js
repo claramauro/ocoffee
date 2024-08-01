@@ -1,3 +1,4 @@
+const { query } = require("express");
 const { client } = require("./client");
 
 const dataMapper = {
@@ -28,7 +29,7 @@ const dataMapper = {
             values: [reference],
         };
         const result = await client.query(query);
-        if (!result.rows.length) {
+        if (!result.rows?.length) {
             return null;
         }
         return result.rows[0];
@@ -44,10 +45,43 @@ const dataMapper = {
             values: [category],
         };
         const result = await client.query(query);
-        if (!result.rows.length) {
+        if (!result.rows?.length) {
             return null;
         }
         return result.rows;
+    },
+    findUser: async (username) => {
+        const query = {
+            text: "SELECT * FROM admin WHERE username = $1",
+            values: [username],
+        };
+        const result = await client.query(query);
+        if (!result.rows?.length) {
+            return null;
+        }
+        return result.rows[0];
+    },
+    addProduct: async (product) => {
+        const query = {
+            text: `
+                INSERT INTO coffee (name, reference, origin, price_kilo, main_feature, availability, description)
+                VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
+                `,
+            values: [
+                product.name,
+                product.reference,
+                product.origin,
+                product.price_kilo,
+                product.main_feature,
+                product.availability,
+                product.description,
+            ],
+        };
+        const result = await client.query(query);
+        if (!result.rows?.length) {
+            return null;
+        }
+        return result.rows[0];
     },
 };
 

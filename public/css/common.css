@@ -40,6 +40,14 @@ em {
     font-style: italic;
 }
 
+input,
+select {
+    padding: 0.6rem;
+    border: 1px solid var(--secondary);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
 .container {
     margin: 0 auto;
     padding: 0 2rem;
@@ -149,6 +157,10 @@ footer p {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+}
+
+.error__message {
+    color: red;
 }
 
 @media (min-width: 992px) {

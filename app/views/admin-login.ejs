@@ -1,0 +1,26 @@
+<%- include('./partials/header', { page : "admin", title : "Admin - oCoffee"}) %>
+
+<main>
+    <div class="container">
+        <h2>Connexion - Page Admin</h2>
+        <form class="form-login" action="/admin/login" method="POST">
+            <% if (locals.error) { %>
+                <span class="error__message"><%= error %></span>
+            <% } %>
+
+            <div class="form__group">
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div class="form__group">
+                <label for="password">Mot de passe : </label>
+                <input type="password" name="password" id="password">
+            </div>
+            <button class="btn" type="submit">Se connecter</button>
+        </form>
+        
+    </div>
+
+</main>
+
+<%- include('./partials/footer') %>

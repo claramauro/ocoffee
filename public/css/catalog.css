@@ -9,10 +9,3 @@
 #form-category {
     align-self: flex-end;
 }
-
-#form-category select {
-    padding: 0.6rem;
-    border: 1px solid var(--secondary);
-    border-radius: 5px;
-    font-size: 1rem;
-}
