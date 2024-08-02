@@ -14,11 +14,19 @@
     margin-bottom: 0.2rem;
 }
 
+.product__reference {
+    color: #a09d9d;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
 .product__origin {
     font-style: italic;
 }
 
-.product__description {
+.product__description,
+.product__feature {
     margin: 0.5rem 0;
 }
 
