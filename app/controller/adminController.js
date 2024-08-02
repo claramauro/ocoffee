@@ -91,7 +91,7 @@ const adminController = {
         );
         res.redirect("/admin");
     },
-    showUpdateProductPage: async (req, res, next) => {
+    updateProductPage: async (req, res, next) => {
         if (!req.session.isAdminConnected) {
             res.redirect("/admin/login");
             return;
@@ -105,7 +105,7 @@ const adminController = {
         const categories = await dataMapper.getCategories();
         res.render("./admin/update-product.ejs", { product, categories });
     },
-    updateProduct: async (req, res, next) => {
+    updateProduct: async (req, res) => {
         if (!req.session.isAdminConnected) {
             res.redirect("/admin/login");
             return;
@@ -153,6 +153,25 @@ const adminController = {
                     `../../public/images/${product.reference}.png`
                 )
             );
+        }
+        res.redirect("/admin");
+    },
+    addCategoryPage: async (req, res) => {
+        if (!req.session.isAdminConnected) {
+            res.redirect("/admin/login");
+            return;
+        }
+        if (!req.query.main_feature) {
+            res.render("./admin/add-category");
+            return;
+        }
+        const newFeature = req.query.main_feature;
+        const result = await dataMapper.addCategory(newFeature);
+        if (!result) {
+            res.render("./admin/add-category", {
+                error: "Une erreur est survenue, impossible d'ajouter la catégorie.",
+            });
+            return;
         }
         res.redirect("/admin");
     },

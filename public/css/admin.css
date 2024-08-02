@@ -108,8 +108,9 @@ main {
     width: 100%;
 }
 
-/* Main de la page erreur*/
-.main--error {
+/* Main de la page erreur et ajout category*/
+.main--error,
+.main--add-category {
     height: 100vh;
 }
 

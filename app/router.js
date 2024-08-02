@@ -42,12 +42,14 @@ router.get(
 
 router.get(
     "/admin/product/update/:reference(\\d+)",
-    catchError(adminController.showUpdateProductPage)
+    catchError(adminController.updateProductPage)
 );
 router.post(
     "/admin/product/update/:reference(\\d+)",
     upload.single("image"),
     catchError(adminController.updateProduct)
 );
+
+router.get("/admin/category/add", catchError(adminController.addCategoryPage));
 
 module.exports = { router };

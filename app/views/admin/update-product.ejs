@@ -2,7 +2,7 @@
 
 <main>
     <a class="btn btn--logout" href="/admin/logout">Déconnexion</a>
-    <h1>Ajouter un produit - Page Admin</h1>
+    <h1>Modifier un produit</h1>
     <form class="form-update-product" action="/admin/product/update/<%= product.reference%>" method="POST" enctype="multipart/form-data">
         <% if (locals.error) { %>
             <span class="error__message"><%= error %></span>
