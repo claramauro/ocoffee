@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
-const { renameSync } = require("node:fs");
+const { renameSync, unlinkSync } = require("node:fs");
+const path = require("node:path");
 const { dataMapper } = require("../database/dataMapper.js");
 
 const adminController = {
@@ -40,7 +41,7 @@ const adminController = {
         if (req.session.isAdminConnected) {
             res.render("./admin/admin", { products });
         } else {
-            res.render("./admin/login");
+            res.redirect("/admin/login");
         }
     },
 
@@ -53,9 +54,14 @@ const adminController = {
         }
     },
     addProduct: async (req, res) => {
+        if (!req.session.isAdminConnected) {
+            res.redirect("/admin/login");
+            return;
+        }
+        // Renommer l'image téléchargée
         renameSync(
             req.file.path,
-            `${req.file.destination}/${req.body.reference}.png`
+            `${req.file.destination}/${Number(req.body.reference)}.png`
         );
         const product = req.body;
         product.availability = product.availability ? true : false;
@@ -78,6 +84,75 @@ const adminController = {
         if (!result) {
             next();
             return;
+        }
+        // Supprimer l'image
+        unlinkSync(
+            path.join(__dirname, `../../public/images/${reference}.png`)
+        );
+        res.redirect("/admin");
+    },
+    showUpdateProductPage: async (req, res, next) => {
+        if (!req.session.isAdminConnected) {
+            res.redirect("/admin/login");
+            return;
+        }
+        const reference = Number(req.params.reference);
+        const product = await dataMapper.getOneProduct(reference);
+        if (!product) {
+            next();
+            return;
+        }
+        const categories = await dataMapper.getCategories();
+        res.render("./admin/update-product.ejs", { product, categories });
+    },
+    updateProduct: async (req, res, next) => {
+        if (!req.session.isAdminConnected) {
+            res.redirect("/admin/login");
+            return;
+        }
+        const productReference = Number(req.params.reference);
+        const product = req.body;
+        product.availability = product.availability ? true : false;
+        const result = await dataMapper.updateProduct(
+            productReference,
+            product
+        );
+        if (!result) {
+            const categories = await dataMapper.getCategories();
+            res.render("./admin/update-product", {
+                error: "Une erreur est survenue, impossible de modifier le produit.",
+                product,
+                categories,
+            });
+            return;
+        }
+        if (req.file !== undefined) {
+            // Supprimer l'ancienne image
+            unlinkSync(
+                path.join(
+                    __dirname,
+                    `../../public/images/${product.reference}.png`
+                )
+            );
+            // Renommer la nouvelle image
+            renameSync(
+                req.file.path,
+                `${req.file.destination}/${Number(product.reference)}.png`
+            );
+        } else if (
+            req.file === undefined &&
+            productReference !== Number(product.reference)
+        ) {
+            renameSync(
+                path.join(
+                    __dirname,
+                    `../../public/images/${productReference}.png`
+                ),
+                path.join(
+                    __dirname,
+                    `../../public/images/${product.reference}.png`
+                )
+            );
         }
         res.redirect("/admin");
     },

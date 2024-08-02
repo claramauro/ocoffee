@@ -3,6 +3,7 @@
 <%- include('./partials/admin-header') %>
 
 <main class="main--error">
+        <a class="btn btn--logout" href="/admin/logout">Déconnexion</a>
         <h1 class="error__title">Erreur <%= error.status %></h1>
         <p><%= error.error %></p>
 

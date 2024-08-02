@@ -21,7 +21,7 @@
                                         <td><%= product.name %></td>
                                         <td><%= product.price_kilo %></td>
                                         <td><%= product.main_feature %></td>
-                                        <td><a href="/admin/product/<%= product.reference %>">Voir le détail</a></td>
+                                        <td><a class="product__update" href="/admin/product/update/<%= product.reference %>">Modifier</a></td>
                                         <td><a class="product__delete" href="/admin/product/delete/<%= product.reference %>">Supprimer</a></td>
                                     </tr>
                                 <% } %>

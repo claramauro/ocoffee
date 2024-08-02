@@ -40,4 +40,14 @@ router.get(
     catchError(adminController.deleteProduct)
 );
 
+router.get(
+    "/admin/product/update/:reference(\\d+)",
+    catchError(adminController.showUpdateProductPage)
+);
+router.post(
+    "/admin/product/update/:reference(\\d+)",
+    upload.single("image"),
+    catchError(adminController.updateProduct)
+);
+
 module.exports = { router };

@@ -1,6 +1,7 @@
 <%- include('./partials/admin-header', { title : "Ajouter un produit - oCoffee"}) %>
 
-<main>
+    <main>
+        <a class="btn btn--logout" href="/admin/logout">Déconnexion</a>
         <h1>Ajouter un produit - Page Admin</h1>
         <form class="form-add-product" action="/admin/product/add" method="POST" enctype="multipart/form-data">
             <% if (locals.error) { %>
@@ -46,8 +47,6 @@
             </div>
             <button class="btn" type="submit">Ajouter</button>
         </form>
-        
-        
     </main>
 
 <%- include('./partials/admin-footer') %>

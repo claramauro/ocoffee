@@ -1,0 +1,62 @@
+<%- include('./partials/admin-header', { title : "Modifier le produit - oCoffee"}) %>
+
+<main>
+    <a class="btn btn--logout" href="/admin/logout">Déconnexion</a>
+    <h1>Ajouter un produit - Page Admin</h1>
+    <form class="form-update-product" action="/admin/product/update/<%= product.reference%>" method="POST" enctype="multipart/form-data">
+        <% if (locals.error) { %>
+            <span class="error__message"><%= error %></span>
+        <% } %>
+
+        <div class="form__group">
+            <label for="name">Nom du produit :</label>
+            <input type="text" name="name" id="name" value="<%= product.name%>" required>
+        </div>
+        <div class="form__group">
+            <label for="reference">Référence : </label>
+            <input type="number" name="reference" id="reference" value="<%= product.reference%>" max="999999999" placeholder="Référence à 9 chiffres" required>
+        </div>
+        <div class="form__group">
+            <label for="origin">Origine : </label>
+            <input type="text" name="origin" id="origin" value="<%= product.origin%>" required>
+        </div>
+        <div class="form__group">
+            <label for="price_kilo">Prix au kilo : </label>
+            <input type="number" name="price_kilo" id="price_kilo" value="<%= product.price_kilo%>" step="0.01" required>
+        </div>
+        <div class="form__group">
+            <label for="main_feature">Caractéristique principale : </label>
+            <select name="main_feature" id="main_feature">
+                <option value="null" disabled>Catégorie</option>
+                <% for( category of categories ) { %>
+                    <option value="<%= category.main_feature %>" 
+                        <% if(category.main_feature === product.main_feature) { %>
+                            selected
+                        <% } %>
+                    ><%= category.main_feature %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="form__group form__group--row">
+            <label for="availability">Disponible : </label>
+            <input type="checkbox" name="availability" id="availability" 
+                <% if (product.availability) { %>
+                    checked
+                <% } %>
+            >
+        </div>
+        <div class="form__group">
+            <label for="description">Description : </label>
+            <textarea name="description" id="description" required><%= product.description%></textarea>
+        </div>
+        <div class="form__group">
+            <label for="image">Ajouter une image :</label>
+            <input type="file" id="image" name="image" accept="image/png">
+        </div>
+        <button class="btn" type="submit">Enregistrer</button>
+    </form>
+    
+</main>
+
+
+<%- include('./partials/admin-footer') %>

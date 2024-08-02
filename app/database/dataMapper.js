@@ -120,6 +120,36 @@ const dataMapper = {
         return result.rows[0];
     },
     /**
+     * Met à jour un produit de la BDD selon sa référence
+     * @param {Number} productReference référence produit avant modification
+     * @param {Product} product
+     * @returns {Promise<Product|null>}
+     */
+    updateProduct: async (productReference, product) => {
+        const query = {
+            text: `
+                UPDATE coffee
+                SET name=$1, reference=$2, origin=$3, price_kilo=$4, main_feature=$5, availability=$6, description=$7
+                WHERE reference=$8 RETURNING *;
+            `,
+            values: [
+                product.name,
+                product.reference,
+                product.origin,
+                product.price_kilo,
+                product.main_feature,
+                product.availability,
+                product.description,
+                productReference,
+            ],
+        };
+        const result = await client.query(query);
+        if (!result.rows?.length) {
+            return null;
+        }
+        return result.rows[0];
+    },
+    /**
      * Retourne l'user si existe dans la BDD
      * @param {String} username
      * @returns {Promise<Object|null>}
