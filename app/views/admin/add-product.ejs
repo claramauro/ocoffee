@@ -1,8 +1,7 @@
-<%- include('./partials/header', { page : "admin", title : "Ajouter un produit - oCoffee"}) %>
+<%- include('./partials/admin-header', { title : "Ajouter un produit - oCoffee"}) %>
 
 <main>
-    <div class="container">
-        <h2>Ajouter un produit - Page Admin</h2>
+        <h1>Ajouter un produit - Page Admin</h1>
         <form class="form-add-product" action="/admin/product/add" method="POST" enctype="multipart/form-data">
             <% if (locals.error) { %>
                 <span class="error__message"><%= error %></span>
@@ -26,7 +25,12 @@
             </div>
             <div class="form__group">
                 <label for="main_feature">Caractéristique principale : </label>
-                <input type="text" name="main_feature" id="main_feature" required>
+                <select name="main_feature" id="main_feature">
+                    <option value="null" disabled>Catégorie</option>
+                    <% for( category of categories ) { %>
+                        <option value="<%= category.main_feature %>"><%= category.main_feature %></option>
+                    <% } %>
+                </select>
             </div>
             <div class="form__group form__group--row">
                 <label for="availability">Disponible : </label>
@@ -37,14 +41,13 @@
                 <textarea name="description" id="description" required></textarea>
             </div>
             <div class="form__group">
-                <label for="image">Ajouter l'image</label>
+                <label for="image">Ajouter l'image :</label>
                 <input type="file" id="image" name="image" accept="image/png" required>
             </div>
             <button class="btn" type="submit">Ajouter</button>
         </form>
         
-    </div>
+        
+    </main>
 
-</main>
-
-<%- include('./partials/footer') %>
+<%- include('./partials/admin-footer') %>

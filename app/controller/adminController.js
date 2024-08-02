@@ -3,38 +3,53 @@ const { renameSync } = require("node:fs");
 const { dataMapper } = require("../database/dataMapper.js");
 
 const adminController = {
-    formPage: (req, res) => {
-        if (req.session.isAdminConnected) {
-            res.redirect("/admin/product/add");
-        } else {
-            res.render("admin-login");
-        }
-    },
     login: async (req, res) => {
         const { username, password } = req.body;
         const user = await dataMapper.findUser(username, password);
         if (!user) {
-            res.render("admin-login", {
+            res.render("./admin/login", {
                 error: "Nom d'utilisateur ou mot de passe incorrect",
             });
             return;
         }
         const isPasswordValid = bcrypt.compareSync(password, user.password);
         if (!isPasswordValid) {
-            res.render("admin-login", {
+            res.render("./admin/login", {
                 error: "Nom d'utilisateur ou mot de passe incorrect",
             });
         } else {
             req.session.isAdminConnected = true;
-            req.app.locals.isAdminConnected = true;
-            res.redirect("/admin/product/add");
+            res.redirect("/admin");
         }
     },
-    addProductFormPage: (req, res) => {
+    logout: (req, res) => {
+        if (req.session.isAdminConnected) {
+            delete req.session.isAdminConnected;
+        }
+        res.redirect("/admin/login");
+    },
+    loginPage: (req, res) => {
+        if (req.session.isAdminConnected) {
+            res.redirect("/admin");
+        } else {
+            res.render("./admin/login");
+        }
+    },
+    showAdminPage: async (req, res) => {
+        const products = await dataMapper.getAllProducts();
+        if (req.session.isAdminConnected) {
+            res.render("./admin/admin", { products });
+        } else {
+            res.render("./admin/login");
+        }
+    },
+
+    addProductPage: async (req, res) => {
         if (!req.session.isAdminConnected) {
             res.redirect("/admin/login");
         } else {
-            res.render("add-product");
+            const categories = await dataMapper.getCategories();
+            res.render("./admin/add-product", { categories });
         }
     },
     addProduct: async (req, res) => {
@@ -46,12 +61,25 @@ const adminController = {
         product.availability = product.availability ? true : false;
         const result = await dataMapper.addProduct(product);
         if (!result) {
-            res.render("add-product", {
+            res.render("./admin/add-product", {
                 error: "Une erreur est survenue, impossible d'ajouter le produit.",
             });
         } else {
-            res.redirect("/catalog/all");
+            res.redirect("/admin");
         }
+    },
+    deleteProduct: async (req, res, next) => {
+        if (!req.session.isAdminConnected) {
+            res.redirect("/admin/login");
+            return;
+        }
+        const reference = Number(req.params.reference);
+        const result = await dataMapper.deleteProduct(reference);
+        if (!result) {
+            next();
+            return;
+        }
+        res.redirect("/admin");
     },
 };
 

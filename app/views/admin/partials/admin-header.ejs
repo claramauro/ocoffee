@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="La boutique de café haut de gamme des frères Pepper, une référence pour les amateurs de café de la région de la ville de Hauts-de-Cloques. Un espace chaleureux et accueillant ou ont été sélectionné avec soin les meilleurs grains de café issus de plantations durables et équitables.">
+
+    <% if (locals.title) { %>
+        <title><%= title %></title>
+    <% } else { %>
+        <title>Admin - oCoffee</title>
+    <% } %>
+
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+    
+    <!-- Common CSS Style -->
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+
+    <!-- Style -->
+    <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a class="header__brand" href="/" title="Retour page d'accueil ">
+                <img class="header__brand__logo" src="/images/logo.svg" alt="Logo de oCoffee" />
+                O'COFFEE
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="/admin">Accueil Admin</a></li>
+                    <li><a href="/admin/product/add">Ajouter un produit</a></li>
+                    <li><a href="/admin/categorie/add">Ajouter une catégorie</a></li>
+                    <li><a href="/admin/categorie/delete">Supprimer une catégorie</a></li>
+                </ul>
+            </nav>
+        </header>

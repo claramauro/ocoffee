@@ -1,13 +1,24 @@
-<%- include('./partials/header', { page : "admin", title : "Admin - oCoffee"}) %>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Connexion - oCoffee</title>
 
-<main>
-    <div class="container">
-        <h2>Connexion - Page Admin</h2>
+        <!-- Common CSS Style -->
+        <link rel="stylesheet" href="/css/reset.css" />
+        <link rel="stylesheet" href="/css/base.css" />
+    
+        <!-- Style -->
+        <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="body--login">
+        <h1>Connexion - Admin</h1>
         <form class="form-login" action="/admin/login" method="POST">
             <% if (locals.error) { %>
                 <span class="error__message"><%= error %></span>
             <% } %>
-
+    
             <div class="form__group">
                 <label for="username">Nom d'utilisateur :</label>
                 <input type="text" name="username" id="username">
@@ -18,9 +29,6 @@
             </div>
             <button class="btn" type="submit">Se connecter</button>
         </form>
-        
-    </div>
-
-</main>
-
-<%- include('./partials/footer') %>
+    
+</body>
+</html>

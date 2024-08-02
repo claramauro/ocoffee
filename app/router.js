@@ -21,13 +21,23 @@ router.get("/product/:reference(\\d+)", catchError(productController.showPage));
 
 router.get("/store", storeController.showPage);
 
-router.get("/admin/login", adminController.formPage);
+/**Partie Admin */
+router.get("/admin/login", adminController.loginPage);
 router.post("/admin/login", catchError(adminController.login));
-router.get("/admin/product/add", adminController.addProductFormPage);
+
+router.get("/admin/logout", adminController.logout);
+
+router.get("/admin", catchError(adminController.showAdminPage));
+
+router.get("/admin/product/add", adminController.addProductPage);
 router.post(
     "/admin/product/add",
     upload.single("image"),
     catchError(adminController.addProduct)
+);
+router.get(
+    "/admin/product/delete/:reference(\\d+)",
+    catchError(adminController.deleteProduct)
 );
 
 module.exports = { router };

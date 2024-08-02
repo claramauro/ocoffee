@@ -1,10 +1,21 @@
-const { query } = require("express");
 const { client } = require("./client");
+
+/**
+ * @typedef {Object} Product
+ * @property {String} name
+ * @property {Number} reference
+ * @property {String} origin
+ * @property {Number} price_kilo
+ * @property {String} main_feature
+ * @property {Boolean} availability
+ * @property {String} description
+ */
 
 const dataMapper = {
     /**
-     * Retourne les 3 derniers produits ajoutés
-     * @returns {Promise<Array>}
+     * Retourne les n derniers produits ajoutés
+     * @param {Number} nbOfProducts
+     * @returns {Promise<Product[]>} retourne un tableau d'objets Product
      */
     getLatestProducts: async (nbOfProducts) => {
         const query = {
@@ -16,13 +27,19 @@ const dataMapper = {
     },
     /**
      * Retourne tous les produits
-     * @returns {Promise<Array>}
+     * @returns {Promise<Product[]>} retourne un tableau d'objets Product
      */
     getAllProducts: async () => {
-        const query = "SELECT name, reference, main_feature FROM coffee";
+        const query =
+            "SELECT name, reference, main_feature, price_kilo FROM coffee";
         const result = await client.query(query);
         return result.rows;
     },
+    /**
+     * Retourne le produit correspondant à la référence
+     * @param {Number} reference
+     * @returns {Promise<Product>|null}
+     */
     getOneProduct: async (reference) => {
         const query = {
             text: `SELECT * FROM coffee WHERE reference = $1`,
@@ -34,15 +51,24 @@ const dataMapper = {
         }
         return result.rows[0];
     },
+    /**
+     * Retourne toutes les main_feature (caractéristique principale)
+     * @returns {Promise<Object|null>}
+     */
     getCategories: async () => {
         const query = "SELECT main_feature FROM coffee GROUP BY main_feature";
         const result = await client.query(query);
         return result.rows;
     },
-    getProductsByCategory: async (category) => {
+    /**
+     * Retourne les produit correspodant à la main_feature
+     * @param {String} main_feature
+     * @returns {Promise<Product|null>} retourne un tableau d'objets Product
+     */
+    getProductsByCategory: async (main_feature) => {
         const query = {
             text: `SELECT name, reference, main_feature FROM coffee WHERE main_feature = $1`,
-            values: [category],
+            values: [main_feature],
         };
         const result = await client.query(query);
         if (!result.rows?.length) {
@@ -50,17 +76,11 @@ const dataMapper = {
         }
         return result.rows;
     },
-    findUser: async (username) => {
-        const query = {
-            text: "SELECT * FROM admin WHERE username = $1",
-            values: [username],
-        };
-        const result = await client.query(query);
-        if (!result.rows?.length) {
-            return null;
-        }
-        return result.rows[0];
-    },
+    /**
+     * Ajoute un produit à la BDD
+     * @param {Product} product
+     * @returns {Promise<Product|null>}
+     */
     addProduct: async (product) => {
         const query = {
             text: `
@@ -76,6 +96,38 @@ const dataMapper = {
                 product.availability,
                 product.description,
             ],
+        };
+        const result = await client.query(query);
+        if (!result.rows?.length) {
+            return null;
+        }
+        return result.rows[0];
+    },
+    /**
+     * Supprime un produit de la BDD selon sa référence
+     * @param {Number} reference
+     * @returns {Promise<Product|null>}
+     */
+    deleteProduct: async (reference) => {
+        const query = {
+            text: `DELETE FROM coffee WHERE reference = $1 RETURNING *`,
+            values: [reference],
+        };
+        const result = await client.query(query);
+        if (!result.rows?.length) {
+            return null;
+        }
+        return result.rows[0];
+    },
+    /**
+     * Retourne l'user si existe dans la BDD
+     * @param {String} username
+     * @returns {Promise<Object|null>}
+     */
+    findUser: async (username) => {
+        const query = {
+            text: "SELECT * FROM admin WHERE username = $1",
+            values: [username],
         };
         const result = await client.query(query);
         if (!result.rows?.length) {

@@ -18,14 +18,25 @@ function notFound(req, res, next) {
 
 function errorHandler(err, req, res, next) {
     console.log(err);
-    let status = 500;
+    const error = {
+        error: "Une erreur est survenue, veuillez réessayer plus tard. Si le problème persiste, merci de contacter directement la boutique.",
+        status: 500,
+    };
     if (err.status) {
-        status = err.status;
+        error.status = err.status;
     }
-    res.status(status).render("error", {
-        error: err.message,
-        status: status,
-    });
+    if (err.status === 404) {
+        error.error = err.message;
+    }
+    if (req.path.startsWith("/admin")) {
+        if (err.status !== 404) {
+            error.error =
+                "Une erreur est survenue, veuillez réessayer plus tard.";
+        }
+        res.status(error.status).render("./admin/admin-error", { error });
+    } else {
+        res.status(error.status).render("error", { error });
+    }
 }
 
 module.exports = { catchError, notFound, errorHandler };

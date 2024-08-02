@@ -1,0 +1,24 @@
+<%- include('../partials/header', { page : "admin", title : "Supprimer un produit - oCoffee"}) %>
+
+<main>
+    <div class="container">
+        <h2>Supprimer un produit - Page Admin</h2>
+        <form class="form-delete-product" action="/admin/product/delete" method="POST">
+            <% if (locals.error) { %>
+                <span class="error__message"><%= error %></span>
+            <% } %>
+            <label for="product">Sélectionner le produit à supprimer :</label>
+            <select name="product" id="product">
+                <option value="ref">Arabica</option>
+                <option value="ref">Ristreto</option>
+            </select>
+
+            
+            <button class="btn" type="submit">Supprimer</button>
+        </form>
+        
+    </div>
+
+</main>
+
+<%- include('../partials/footer') %>
