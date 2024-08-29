@@ -197,7 +197,7 @@ const dataMapper = {
      */
     findUser: async (username) => {
         const query = {
-            text: "SELECT * FROM admin WHERE username = $1",
+            text: `SELECT * FROM "user" WHERE username = $1`,
             values: [username],
         };
         const result = await client.query(query);

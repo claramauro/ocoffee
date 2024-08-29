@@ -21,7 +21,7 @@ const adminController = {
             return;
         }
         const isPasswordValid = bcrypt.compareSync(password, user.password);
-        if (!isPasswordValid) {
+        if (!isPasswordValid || user.role !== "admin") {
             res.render("./admin/login", {
                 error: "Nom d'utilisateur ou mot de passe incorrect",
             });
