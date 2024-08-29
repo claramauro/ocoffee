@@ -1,7 +1,7 @@
 const { dataMapper } = require("../database/dataMapper.js");
 
 const productController = {
-    showPage: async (req, res, next) => {
+    show: async (req, res, next) => {
         const reference = Number(req.params.reference);
         const product = await dataMapper.getOneProduct(reference);
         if (!product) {

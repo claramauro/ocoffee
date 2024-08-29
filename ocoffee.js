@@ -9,7 +9,7 @@ const app = express();
 const path = require("node:path");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
-const { router } = require("./app/router");
+const { router } = require("./app/routers/router.js");
 const {
     notFound,
     errorHandler,

@@ -4,6 +4,13 @@ const path = require("node:path");
 const { dataMapper } = require("../database/dataMapper.js");
 
 const adminController = {
+    loginPage: (req, res) => {
+        if (req.session.isAdminConnected) {
+            res.redirect("/admin");
+        } else {
+            res.render("./admin/login");
+        }
+    },
     login: async (req, res) => {
         const { username, password } = req.body;
         const user = await dataMapper.findUser(username, password);
@@ -24,40 +31,20 @@ const adminController = {
         }
     },
     logout: (req, res) => {
-        if (req.session.isAdminConnected) {
-            delete req.session.isAdminConnected;
-        }
+        delete req.session.isAdminConnected;
+        req.session.destroy();
         res.redirect("/admin/login");
-    },
-    loginPage: (req, res) => {
-        if (req.session.isAdminConnected) {
-            res.redirect("/admin");
-        } else {
-            res.render("./admin/login");
-        }
     },
     showAdminPage: async (req, res) => {
         const products = await dataMapper.getAllProducts();
-        if (req.session.isAdminConnected) {
-            res.render("./admin/admin", { products });
-        } else {
-            res.redirect("/admin/login");
-        }
+        res.render("./admin/admin", { products });
     },
 
     addProductPage: async (req, res) => {
-        if (!req.session.isAdminConnected) {
-            res.redirect("/admin/login");
-        } else {
-            const categories = await dataMapper.getCategories();
-            res.render("./admin/add-product", { categories });
-        }
+        const categories = await dataMapper.getCategories();
+        res.render("./admin/add-product", { categories });
     },
     addProduct: async (req, res) => {
-        if (!req.session.isAdminConnected) {
-            res.redirect("/admin/login");
-            return;
-        }
         // Renommer l'image téléchargée
         renameSync(
             req.file.path,
@@ -75,10 +62,6 @@ const adminController = {
         }
     },
     deleteProduct: async (req, res, next) => {
-        if (!req.session.isAdminConnected) {
-            res.redirect("/admin/login");
-            return;
-        }
         const reference = Number(req.params.reference);
         const result = await dataMapper.deleteProduct(reference);
         if (!result) {
@@ -92,10 +75,6 @@ const adminController = {
         res.redirect("/admin");
     },
     updateProductPage: async (req, res, next) => {
-        if (!req.session.isAdminConnected) {
-            res.redirect("/admin/login");
-            return;
-        }
         const reference = Number(req.params.reference);
         const product = await dataMapper.getOneProduct(reference);
         if (!product) {
@@ -106,10 +85,6 @@ const adminController = {
         res.render("./admin/update-product.ejs", { product, categories });
     },
     updateProduct: async (req, res) => {
-        if (!req.session.isAdminConnected) {
-            res.redirect("/admin/login");
-            return;
-        }
         const productReference = Number(req.params.reference);
         const product = req.body;
         product.availability = product.availability ? true : false;
@@ -157,10 +132,6 @@ const adminController = {
         res.redirect("/admin");
     },
     addCategoryPage: async (req, res) => {
-        if (!req.session.isAdminConnected) {
-            res.redirect("/admin/login");
-            return;
-        }
         if (!req.query.main_feature) {
             res.render("./admin/add-category");
             return;

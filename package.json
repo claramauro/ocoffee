@@ -7,7 +7,8 @@
         "doc": "docs"
     },
     "scripts": {
-        "dev": "nodemon ocoffee.js"
+        "dev": "nodemon ocoffee.js",
+        "db:reset": "psql -U ocoffee -d ocoffee < app/database/create_db.sql"
     },
     "keywords": [],
     "author": "",

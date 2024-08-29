@@ -1,5 +1,5 @@
 const storeController = {
-    showPage: (req, res) => {
+    index: (req, res) => {
         res.render("store");
     },
 };

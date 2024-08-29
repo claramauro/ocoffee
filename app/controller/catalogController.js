@@ -1,7 +1,7 @@
 const { dataMapper } = require("../database/dataMapper.js");
 
 const catalogController = {
-    showPage: async (req, res) => {
+    index: async (req, res) => {
         const categories = await dataMapper.getCategories();
         const products = await dataMapper.getAllProducts();
         if (!req.session.showAllProduct) {
@@ -12,7 +12,7 @@ const catalogController = {
         }
         res.render("catalog", { products, categories });
     },
-    updateSession: (req, res) => {
+    showAll: (req, res) => {
         if (!req.session.showAllProduct) {
             req.session.showAllProduct = true;
         }
