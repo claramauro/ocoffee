@@ -2,7 +2,9 @@ DROP TABLE IF EXISTS "coffee", "main_feature", "user";
 
 CREATE TABLE "main_feature" (
     "id" SERIAL PRIMARY KEY,
-    "name" TEXT NOT NULL
+    "name" TEXT NOT NULL,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ
 );
 
 CREATE TABLE "coffee" (
@@ -14,7 +16,8 @@ CREATE TABLE "coffee" (
     "main_feature_id" INT,
     "availability" BOOLEAN DEFAULT TRUE,
     "description" TEXT,
-    "publication_date" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ,
     FOREIGN KEY ("main_feature_id") REFERENCES "main_feature"("id")
 );
 
@@ -22,7 +25,9 @@ CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "username" TEXT NOT NULL UNIQUE,
     "password" TEXT NOT NULL,
-    "role" TEXT NOT NULL DEFAULT 'user'
+    "role" TEXT NOT NULL DEFAULT 'user',
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ
 );
 
 INSERT INTO "main_feature" ("name")

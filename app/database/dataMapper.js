@@ -22,7 +22,7 @@ const dataMapper = {
             text: `
                 SELECT coffee.name AS name, coffee.reference AS reference, main_feature.name AS main_feature FROM coffee 
                 JOIN main_feature ON coffee.main_feature_id = main_feature.id
-                ORDER BY coffee.publication_date DESC LIMIT $1;
+                ORDER BY coffee.created_at DESC LIMIT $1;
             `,
             values: [nbOfProducts],
         };
@@ -46,7 +46,7 @@ const dataMapper = {
     getOneProduct: async (reference) => {
         const query = {
             text: `
-                SELECT coffee.name AS name, reference, origin, price_kilo, availability, description, publication_date, main_feature.name AS main_feature
+                SELECT coffee.name AS name, reference, origin, price_kilo, availability, description, coffee.created_at, main_feature.name AS main_feature
                 FROM coffee 
                 JOIN main_feature ON coffee.main_feature_id = main_feature.id
                 WHERE reference = $1;
@@ -170,7 +170,7 @@ const dataMapper = {
         const query2 = {
             text: `
                 UPDATE coffee
-                SET name=$1, reference=$2, origin=$3, price_kilo=$4, main_feature_id=$5, availability=$6, description=$7
+                SET name=$1, reference=$2, origin=$3, price_kilo=$4, main_feature_id=$5, availability=$6, description=$7, updated_at=CURRENT_TIMESTAMP
                 WHERE reference=$8 RETURNING *;
             `,
             values: [
