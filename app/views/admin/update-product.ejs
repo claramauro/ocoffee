@@ -1,7 +1,5 @@
-<%- include('./partials/admin-header', { title : "Modifier le produit - oCoffee"}) %>
+<%- include('./partials/admin-header', { title : "Modifier le produit - Admin/oCoffee"}) %>
 
-<main>
-    <a class="btn btn--logout" href="/admin/logout">Déconnexion</a>
     <h1>Modifier un produit</h1>
     <form class="form-update-product" action="/admin/product/update/<%= product.reference%>" method="POST" enctype="multipart/form-data">
         <% if (locals.error) { %>

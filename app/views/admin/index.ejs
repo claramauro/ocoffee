@@ -1,0 +1,30 @@
+<%- include('./partials/admin-header') %>
+
+    <h1>Admin</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Référence</th>
+                <th>Nom</th>
+                <th>Prix au kilo (€)</th>
+                <th>Caractéristique</th>
+                <th colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                <% for( locals.product of products) { %>
+                    <tr>
+                        <td><%= product.reference %></td>
+                        <td><%= product.name %></td>
+                        <td><%= product.price_kilo %></td>
+                        <td><%= product.main_feature %></td>
+                        <td><a class="product__update" href="/admin/product/update/<%= product.reference %>">Modifier</a></td>
+                        <td><a class="product__delete" href="/admin/product/delete/<%= product.reference %>">Supprimer</a></td>
+                    </tr>
+                <% } %>
+        </tbody>
+    </table>
+</main>
+
+<%- include('./partials/admin-footer') %>
