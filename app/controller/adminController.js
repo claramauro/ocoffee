@@ -35,9 +35,9 @@ const adminController = {
         req.session.destroy();
         res.redirect("/admin/login");
     },
-    showAdminPage: async (req, res) => {
+    index: async (req, res) => {
         const products = await dataMapper.getAllProducts();
-        res.render("./admin/admin", { products });
+        res.render("./admin/index", { products });
     },
 
     addProductPage: async (req, res) => {

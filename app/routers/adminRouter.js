@@ -14,7 +14,7 @@ adminRouter.use(isAuth);
 
 adminRouter.get("/admin/logout", adminController.logout);
 
-adminRouter.get("/admin", catchError(adminController.showAdminPage));
+adminRouter.get("/admin", catchError(adminController.index));
 
 adminRouter.get("/admin/product/add", adminController.addProductPage);
 adminRouter.post(
