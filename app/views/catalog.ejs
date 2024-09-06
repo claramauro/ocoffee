@@ -12,16 +12,16 @@
                     <% if (locals.categories?.length) { %>
                         <form action="/catalog/category" method="GET" id="form-category">
                             <label class="sr-only" for="category">Filtrer par catégorie</label>
-                            <select name="category" id="category">
+                            <select name="id" id="category">
                                 <option value="null" disabled>Catégorie</option>
                                 <option value="all">Tous les produits</option>
     
                                 <% for( category of categories ) { %>
-                                    <option value="<%= category.main_feature %>"
-                                        <% if(category.main_feature === locals.currentCategory) { %>
+                                    <option value="<%= category.id %>"
+                                        <% if(category.id === locals.currentCategoryId) { %>
                                             selected
                                         <% } %>
-                                    ><%= category.main_feature %></option>
+                                    ><%= category.name %></option>
                                 <% } %>
                             </select>
                         </form>
@@ -38,7 +38,7 @@
                                     <div class="card__content">
                                         <h3 class="card__title"><%= product.name %></h3>
                                         <p class="card__info">
-                                            Caractéristique principale : <%= product.main_feature %>
+                                            Caractéristique principale : <%= product.category %>
                                         </p>
                                     </div>
                                 </li>

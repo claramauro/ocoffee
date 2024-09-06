@@ -38,9 +38,22 @@ adminRouter.post(
     upload.single("image"),
     catchError(adminController.updateProduct)
 );
+
+adminRouter.get("/admin/categories", catchError(adminController.categoryPage));
+
 adminRouter.get(
-    "/admin/category/add",
+    "/admin/categories/delete/:id(\\d+)",
+    catchError(adminController.deleteCategory)
+);
+
+adminRouter.get(
+    "/admin/categories/add",
     catchError(adminController.addCategoryPage)
+);
+
+adminRouter.post(
+    "/admin/categories/add",
+    catchError(adminController.addCategory)
 );
 
 module.exports = { adminRouter };

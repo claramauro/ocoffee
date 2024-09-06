@@ -19,20 +19,22 @@ const catalogController = {
         res.redirect("/catalog");
     },
     showByCategory: async (req, res, next) => {
-        const category = req.query.category;
-        if (category === "all") {
+        const id = req.query.id;
+        if (id === "all") {
             res.redirect("/catalog/all");
             return;
         }
-        const products = await dataMapper.getProductsByCategory(category);
+        const products = await dataMapper.getProductsByCategory(id);
         if (!products) {
             next();
             return;
         }
         const categories = await dataMapper.getCategories();
+        console.log(typeof id);
+
         res.render("catalog", {
             products,
-            currentCategory: category,
+            currentCategoryId: parseInt(id),
             categories,
         });
     },

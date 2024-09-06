@@ -23,15 +23,15 @@
             <input type="number" name="price_kilo" id="price_kilo" value="<%= product.price_kilo%>" step="0.01" required>
         </div>
         <div class="form__group">
-            <label for="main_feature">Caractéristique principale : </label>
-            <select name="main_feature" id="main_feature">
+            <label for="category">Caractéristique principale : </label>
+            <select name="category" id="category">
                 <option value="null" disabled>Catégorie</option>
                 <% for( category of categories ) { %>
-                    <option value="<%= category.main_feature %>" 
-                        <% if(category.main_feature === product.main_feature) { %>
+                    <option value="<%= category.name %>" 
+                        <% if(category.name === product.category) { %>
                             selected
                         <% } %>
-                    ><%= category.main_feature %></option>
+                    ><%= category.name %></option>
                 <% } %>
             </select>
         </div>

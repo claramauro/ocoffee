@@ -1,6 +1,7 @@
 <%- include('./partials/admin-header') %>
 
-    <h1>Admin</h1>
+    <h1>Les produits</h1>
+    <a class="btn btn--left" href="/admin/product/add" title="Ajouter un produit">Ajouter un produit</a>
     <table>
         <thead>
             <tr>
@@ -13,14 +14,14 @@
         </thead>
         <tbody>
             
-                <% for( locals.product of products) { %>
+                <% for( let product of locals.products) { %>
                     <tr>
                         <td><%= product.reference %></td>
                         <td><%= product.name %></td>
                         <td><%= product.price_kilo %></td>
-                        <td><%= product.main_feature %></td>
-                        <td><a class="product__update" href="/admin/product/update/<%= product.reference %>">Modifier</a></td>
-                        <td><a class="product__delete" href="/admin/product/delete/<%= product.reference %>">Supprimer</a></td>
+                        <td><%= product.category %></td>
+                        <td><a class="table__actions" href="/admin/product/update/<%= product.reference %>">Modifier</a></td>
+                        <td><a class="table__actions table__actions--delete" href="/admin/product/delete/<%= product.reference %>">Supprimer</a></td>
                     </tr>
                 <% } %>
         </tbody>

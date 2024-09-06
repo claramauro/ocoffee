@@ -82,7 +82,7 @@ const adminController = {
             return;
         }
         const categories = await dataMapper.getCategories();
-        res.render("./admin/update-product.ejs", { product, categories });
+        res.render("./admin/update-product", { product, categories });
     },
     updateProduct: async (req, res) => {
         const productReference = Number(req.params.reference);
@@ -131,20 +131,34 @@ const adminController = {
         }
         res.redirect("/admin");
     },
-    addCategoryPage: async (req, res) => {
-        if (!req.query.main_feature) {
-            res.render("./admin/add-category");
+
+    categoryPage: async (req, res) => {
+        const categories = await dataMapper.getCountProductByCategory();
+        res.render("./admin/categories", { categories });
+    },
+
+    deleteCategory: async (req, res) => {
+        const id = req.params.id;
+        const result = await dataMapper.deleteCategory(id);
+        if (!result) {
+            next();
             return;
         }
-        const newFeature = req.query.main_feature;
-        const result = await dataMapper.addCategory(newFeature);
+        res.redirect("/admin/categories");
+    },
+    addCategoryPage: async (req, res) => {
+        res.render("./admin/add-category");
+    },
+    addCategory: async (req, res) => {
+        const category = req.body.category;
+        const result = await dataMapper.addCategory(category);
         if (!result) {
             res.render("./admin/add-category", {
                 error: "Une erreur est survenue, impossible d'ajouter la catégorie.",
             });
-            return;
+        } else {
+            res.redirect("/admin/categories");
         }
-        res.redirect("/admin");
     },
 };
 

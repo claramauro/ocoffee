@@ -1,17 +1,28 @@
 <%- include('./partials/admin-header', { title : "Catégories - Admin/oCoffee"}) %>
 
-    <h1>Ajouter une catégorie </h1>
-    <form class="form-add-category" action="/admin/category/add" method="GET">
-        <% if (locals.error) { %>
-            <span class="error__message"><%= error %></span>
-        <% } %>
+    <h1>Les catégories </h1>
 
-        <div class="form__group">
-            <label for="main_feauture">Nom de la catégorie :</label>
-            <input type="text" name="main_feature" id="main_feauture" required>
-        </div>
-        <button class="btn" type="submit">Ajouter</button>
-    </form>
+    <a class="btn btn--left" href="/admin/categories/add" title="Ajouter une nouvelle catégorie">Ajouter une catégorie</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Nombre de produits</th>
+                <th colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+                <% for( let category of locals.categories) { %>
+                    <tr>
+                        <td><%= category.name %></td>
+                        <td><%= category.total %></td>
+                        <td><a class="table__actions" href="/admin/categories/update/<%= category.id %>">Modifier</a></td>
+                        <td><a class="table__actions table__actions--delete" href="/admin/categories/delete/<%= category.id %>">Supprimer</a></td>
+                    </tr>
+                <% } %>
+        </tbody>
+    </table>
     
 </main>
 
