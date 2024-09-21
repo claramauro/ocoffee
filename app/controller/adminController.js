@@ -27,11 +27,13 @@ const adminController = {
             });
         } else {
             req.session.isAdminConnected = true;
+            req.app.locals.isAdminConnected = true;
             res.redirect("/admin");
         }
     },
     logout: (req, res) => {
         delete req.session.isAdminConnected;
+        delete req.app.locals.isAdminConnected;
         req.session.destroy();
         res.redirect("/admin/login");
     },
@@ -46,10 +48,7 @@ const adminController = {
     },
     addProduct: async (req, res) => {
         // Renommer l'image téléchargée
-        renameSync(
-            req.file.path,
-            `${req.file.destination}/${Number(req.body.reference)}.png`
-        );
+        renameSync(req.file.path, `${req.file.destination}/${Number(req.body.reference)}.png`);
         const product = req.body;
         product.availability = product.availability ? true : false;
         const result = await dataMapper.addProduct(product);
@@ -69,9 +68,7 @@ const adminController = {
             return;
         }
         // Supprimer l'image
-        unlinkSync(
-            path.join(__dirname, `../../public/images/${reference}.png`)
-        );
+        unlinkSync(path.join(__dirname, `../../public/images/${reference}.png`));
         res.redirect("/admin");
     },
     updateProductPage: async (req, res, next) => {
@@ -88,10 +85,7 @@ const adminController = {
         const productReference = Number(req.params.reference);
         const product = req.body;
         product.availability = product.availability ? true : false;
-        const result = await dataMapper.updateProduct(
-            productReference,
-            product
-        );
+        const result = await dataMapper.updateProduct(productReference, product);
         if (!result) {
             const categories = await dataMapper.getCategories();
             res.render("./admin/update-product", {
@@ -103,30 +97,13 @@ const adminController = {
         }
         if (req.file !== undefined) {
             // Supprimer l'ancienne image
-            unlinkSync(
-                path.join(
-                    __dirname,
-                    `../../public/images/${product.reference}.png`
-                )
-            );
+            unlinkSync(path.join(__dirname, `../../public/images/${product.reference}.png`));
             // Renommer la nouvelle image
+            renameSync(req.file.path, `${req.file.destination}/${Number(product.reference)}.png`);
+        } else if (req.file === undefined && productReference !== Number(product.reference)) {
             renameSync(
-                req.file.path,
-                `${req.file.destination}/${Number(product.reference)}.png`
-            );
-        } else if (
-            req.file === undefined &&
-            productReference !== Number(product.reference)
-        ) {
-            renameSync(
-                path.join(
-                    __dirname,
-                    `../../public/images/${productReference}.png`
-                ),
-                path.join(
-                    __dirname,
-                    `../../public/images/${product.reference}.png`
-                )
+                path.join(__dirname, `../../public/images/${productReference}.png`),
+                path.join(__dirname, `../../public/images/${product.reference}.png`)
             );
         }
         res.redirect("/admin");

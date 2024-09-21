@@ -3,6 +3,7 @@ function isAuth(req, res, next) {
         next();
         return;
     } else {
+        req.app.locals.isAdminConnected = false;
         res.redirect("/admin/login");
     }
 }
