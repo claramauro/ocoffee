@@ -8,12 +8,8 @@ const app = express();
 // imports
 const path = require("node:path");
 const session = require("express-session");
-const bcrypt = require("bcrypt");
 const { router } = require("./app/routers/router.js");
-const {
-    notFound,
-    errorHandler,
-} = require("./app/middlewares/errorHandlers.js");
+const { notFound, errorHandler } = require("./app/middlewares/errorHandlers.js");
 
 // Config dossier public
 const securePathToAssets = path.join(__dirname, "public");
@@ -37,10 +33,6 @@ app.use(
         },
     })
 );
-
-// const mdp = "admin";
-// const passwordHash = bcrypt.hashSync(mdp, 11);
-// console.log(passwordHash);
 
 // parser req.body
 app.use(express.urlencoded({ extended: false }));

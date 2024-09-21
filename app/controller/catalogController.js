@@ -30,8 +30,6 @@ const catalogController = {
             return;
         }
         const categories = await dataMapper.getCategories();
-        console.log(typeof id);
-
         res.render("catalog", {
             products,
             currentCategoryId: parseInt(id),

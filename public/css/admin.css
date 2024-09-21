@@ -1,4 +1,20 @@
 /* Page login */
+:root {
+    --primary: #3e1e03;
+    --secondary: #60695c;
+    --tertiary: #e1ddd3;
+    --border: rgba(96, 105, 92, 0.5);
+}
+
+html {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    line-height: 1.7rem;
+}
+
 .body--login {
     height: 100vh;
     display: flex;

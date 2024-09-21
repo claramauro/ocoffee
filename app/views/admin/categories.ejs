@@ -9,7 +9,7 @@
             <tr>
                 <th>Nom</th>
                 <th>Nombre de produits</th>
-                <th colspan="2">Actions</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -17,7 +17,6 @@
                     <tr>
                         <td><%= category.name %></td>
                         <td><%= category.total %></td>
-                        <td><a class="table__actions" href="/admin/categories/update/<%= category.id %>">Modifier</a></td>
                         <td><a class="table__actions table__actions--delete" href="/admin/categories/delete/<%= category.id %>">Supprimer</a></td>
                     </tr>
                 <% } %>
