@@ -64,7 +64,7 @@ const dataMapper = {
      * @returns {Promise<Object|null>}
      */
     getCategories: async () => {
-        const query = `SELECT id, name FROM category ORDER BY name COLLATE "fr_FR.UTF-8"`; // Collate pour prendre en compte les accents (ex : é)
+        const query = `SELECT id, name FROM category ORDER BY name`;
         const result = await client.query(query);
         return result.rows;
     },
@@ -77,7 +77,7 @@ const dataMapper = {
             SELECT category.id, category.name, COUNT(coffee.id) AS total FROM category 
             LEFT JOIN coffee ON coffee.category_id = category.id 
             GROUP BY category.id, category.name 
-            ORDER BY category.name COLLATE "fr_FR.UTF-8";`;
+            ORDER BY category.name;`;
         const result = await client.query(query);
         return result.rows;
     },
