@@ -1,0 +1,29 @@
+<%- include('./partials/admin-header', { title : "Catégories - Admin/oCoffee"}) %>
+
+    <h1>Les catégories </h1>
+
+    <a class="btn btn--left" href="/admin/categories/add" title="Ajouter une nouvelle catégorie">Ajouter une catégorie</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Nombre de produits</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+                <% for( let category of locals.categories) { %>
+                    <tr>
+                        <td><%= category.name %></td>
+                        <td><%= category.total %></td>
+                        <td><a class="table__actions table__actions--delete" href="/admin/categories/delete/<%= category.id %>">Supprimer</a></td>
+                    </tr>
+                <% } %>
+        </tbody>
+    </table>
+    
+</main>
+
+
+<%- include('./partials/admin-footer') %>

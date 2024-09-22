@@ -16,7 +16,6 @@
     
     <!-- Common CSS Style -->
     <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/base.css" />
 
     <!-- Style -->
     <link rel="stylesheet" href="/css/admin.css" />
@@ -24,15 +23,16 @@
 <body>
     <div class="container">
         <header>
-            <a class="header__brand" href="/" title="Retour page d'accueil ">
+            <a class="header__brand" href="/" title="Retour page d'accueil du site oCoffee">
                 <img class="header__brand__logo" src="/images/logo.svg" alt="Logo de oCoffee" />
                 O'COFFEE
             </a>
             <nav>
                 <ul>
-                    <li><a href="/admin">Accueil Admin</a></li>
-                    <li><a href="/admin/product/add">Ajouter un produit</a></li>
-                    <li><a href="/admin/category/add">Ajouter une catégorie</a></li>
+                    <li><a href="/admin">Les produits</a></li>
+                    <li><a href="/admin/categories">Les catégories</a></li>
                 </ul>
             </nav>
         </header>
+        <main>
+            <a class="btn btn--logout" href="/admin/logout">Déconnexion</a>

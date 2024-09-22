@@ -25,15 +25,15 @@
                     <ul class="articles__list">
                         <% for ( const product of products ) { %>
                             <li class="card">
+                                <a class="card__link" href="/product/<%= product.reference %>" title="Voir le produit" aria-label="Aller sur la page du produit"></a>
                                 <div class="card__img">
-                                    <img src="/images/<%= product.reference %>.png" alt="">
+                                    <img src="/images/products/<%= product.reference %>.png" alt="">
                                 </div>
                                 <div class="card__content">
                                     <h3 class="card__title"><%= product.name %></h3>
                                     <p class="card__info">
-                                        Caractéristique principale : <%= product.main_feature %>
+                                        Caractéristique principale : <%= product.category %>
                                     </p>
-                                    <a class="card__link btn" href="/product/<%= product.reference %>" title="Voir le produit" aria-label="Aller sur la page du produit">Découvrir</a>
                                 </div>
                             </li>
                         <% } %>

@@ -6,7 +6,7 @@ const { client } = require("./client");
  * @property {Number} reference
  * @property {String} origin
  * @property {Number} price_kilo
- * @property {String} main_feature
+ * @property {String} category
  * @property {Boolean} availability
  * @property {String} description
  */
@@ -20,9 +20,9 @@ const dataMapper = {
     getLatestProducts: async (nbOfProducts) => {
         const query = {
             text: `
-                SELECT coffee.name AS name, coffee.reference AS reference, main_feature.name AS main_feature FROM coffee 
-                JOIN main_feature ON coffee.main_feature_id = main_feature.id
-                ORDER BY coffee.publication_date DESC LIMIT $1;
+                SELECT coffee.name AS name, coffee.reference AS reference, category.name AS category FROM coffee 
+                JOIN category ON coffee.category_id = category.id
+                ORDER BY coffee.created_at DESC LIMIT $1;
             `,
             values: [nbOfProducts],
         };
@@ -34,7 +34,7 @@ const dataMapper = {
      * @returns {Promise<Product[]>} retourne un tableau d'objets Product
      */
     getAllProducts: async () => {
-        const query = `SELECT coffee.name AS name, coffee.reference AS reference, main_feature.name AS main_feature, coffee.price_kilo FROM coffee JOIN main_feature ON coffee.main_feature_id = main_feature.id;`;
+        const query = `SELECT coffee.name AS name, coffee.reference AS reference, category.name AS category, coffee.price_kilo FROM coffee JOIN category ON coffee.category_id = category.id;`;
         const result = await client.query(query);
         return result.rows;
     },
@@ -46,9 +46,9 @@ const dataMapper = {
     getOneProduct: async (reference) => {
         const query = {
             text: `
-                SELECT coffee.name AS name, reference, origin, price_kilo, availability, description, publication_date, main_feature.name AS main_feature
+                SELECT coffee.name AS name, reference, origin, price_kilo, availability, description, coffee.created_at, category.name AS category
                 FROM coffee 
-                JOIN main_feature ON coffee.main_feature_id = main_feature.id
+                JOIN category ON coffee.category_id = category.id
                 WHERE reference = $1;
             `,
             values: [reference],
@@ -60,23 +60,46 @@ const dataMapper = {
         return result.rows[0];
     },
     /**
-     * Retourne toutes les main_feature (caractéristique principale)
+     * Retourne toutes les categories triées par ordre alphabétique
      * @returns {Promise<Object|null>}
      */
     getCategories: async () => {
-        const query =
-            "SELECT main_feature.name AS main_feature FROM main_feature;";
+        const query = `SELECT id, name FROM category ORDER BY name COLLATE "fr_FR.UTF-8"`; // Collate pour prendre en compte les accents (ex : é)
         const result = await client.query(query);
         return result.rows;
     },
     /**
-     * Ajoute une nouvelle main_feature (caractéristique principale) dans la table main_feature
+     * Retourne toutes les catégories triées par ordre alphabétique, ainsi que le nombre de café par catégorie
      * @returns {Promise<Object|null>}
      */
-    addCategory: async (main_feature) => {
+    getCountProductByCategory: async () => {
+        const query = `
+            SELECT category.id, category.name, COUNT(coffee.id) AS total FROM category 
+            LEFT JOIN coffee ON coffee.category_id = category.id 
+            GROUP BY category.id, category.name 
+            ORDER BY category.name COLLATE "fr_FR.UTF-8";`;
+        const result = await client.query(query);
+        return result.rows;
+    },
+    /**
+     * Ajoute une nouvelle category (caractéristique principale) dans la table category
+     * @returns {Promise<Object|null>}
+     */
+    addCategory: async (category) => {
         const query = {
-            text: `INSERT INTO main_feature (name) VALUES ($1) RETURNING *`,
-            values: [main_feature],
+            text: `INSERT INTO category (name) VALUES (INITCAP($1)) RETURNING *;`, // Met la première lettre en majuscule pour uniformiser
+            values: [category],
+        };
+        const result = await client.query(query);
+        if (!result.rows?.length) {
+            return null;
+        }
+        return result.rows[0];
+    },
+    deleteCategory: async (id) => {
+        const query = {
+            text: `DELETE FROM category WHERE id = $1 RETURNING *`,
+            values: [id],
         };
         const result = await client.query(query);
         if (!result.rows?.length) {
@@ -85,19 +108,19 @@ const dataMapper = {
         return result.rows[0];
     },
     /**
-     * Retourne les produit correspodant à la main_feature
-     * @param {String} main_feature
+     * Retourne les produit correspodant à la category
+     * @param {String} category
      * @returns {Promise<Product|null>} retourne un tableau d'objets Product
      */
-    getProductsByCategory: async (main_feature) => {
+    getProductsByCategory: async (id) => {
         const query = {
             text: `
-                SELECT coffee.name AS name, coffee.reference AS reference, main_feature.name AS main_feature
+                SELECT coffee.name AS name, coffee.reference AS reference, category.name AS category
                 FROM coffee 
-                JOIN main_feature ON main_feature.id = coffee.main_feature_id
-                WHERE main_feature.name = $1;
+                JOIN category ON category.id = coffee.category_id
+                WHERE category.id = $1;
             `,
-            values: [main_feature],
+            values: [id],
         };
         const result = await client.query(query);
         if (!result.rows?.length) {
@@ -112,14 +135,14 @@ const dataMapper = {
      */
     addProduct: async (product) => {
         const query1 = {
-            text: "SELECT id FROM main_feature WHERE name = $1",
-            values: [product.main_feature],
+            text: "SELECT id FROM category WHERE name = $1",
+            values: [product.category],
         };
         let result = await client.query(query1);
-        const main_feature_id = result.rows[0].id;
+        const category_id = result.rows[0].id;
         const query2 = {
             text: `
-                INSERT INTO coffee (name, reference, origin, price_kilo, main_feature_id, availability, description)
+                INSERT INTO coffee (name, reference, origin, price_kilo, category_id, availability, description)
                 VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
                 `,
             values: [
@@ -127,7 +150,7 @@ const dataMapper = {
                 product.reference,
                 product.origin,
                 product.price_kilo,
-                main_feature_id,
+                category_id,
                 product.availability,
                 product.description,
             ],
@@ -162,15 +185,15 @@ const dataMapper = {
      */
     updateProduct: async (productReference, product) => {
         const query1 = {
-            text: "SELECT id FROM main_feature WHERE name = $1",
-            values: [product.main_feature],
+            text: "SELECT id FROM category WHERE name = $1",
+            values: [product.category],
         };
         let result = await client.query(query1);
-        const main_feature_id = result.rows[0].id;
+        const category_id = result.rows[0].id;
         const query2 = {
             text: `
                 UPDATE coffee
-                SET name=$1, reference=$2, origin=$3, price_kilo=$4, main_feature_id=$5, availability=$6, description=$7
+                SET name=$1, reference=$2, origin=$3, price_kilo=$4, category_id=$5, availability=$6, description=$7, updated_at=CURRENT_TIMESTAMP
                 WHERE reference=$8 RETURNING *;
             `,
             values: [
@@ -178,7 +201,7 @@ const dataMapper = {
                 product.reference,
                 product.origin,
                 product.price_kilo,
-                main_feature_id,
+                category_id,
                 product.availability,
                 product.description,
                 productReference,
@@ -197,7 +220,7 @@ const dataMapper = {
      */
     findUser: async (username) => {
         const query = {
-            text: "SELECT * FROM admin WHERE username = $1",
+            text: `SELECT * FROM "user" WHERE username = $1`,
             values: [username],
         };
         const result = await client.query(query);

@@ -1,16 +1,14 @@
-<%- include('./partials/admin-header', { title : "Ajouter une catégorie - oCoffee"}) %>
+<%- include('./partials/admin-header', { title : "Ajouter une catégorie - Admin/oCoffee"}) %>
 
-<main class="main--add-category">
-    <a class="btn btn--logout" href="/admin/logout">Déconnexion</a>
     <h1>Ajouter une catégorie </h1>
-    <form class="form-add-category" action="/admin/category/add" method="GET">
+    <form class="form-add-category" action="/admin/categories/add" method="POST">
         <% if (locals.error) { %>
             <span class="error__message"><%= error %></span>
         <% } %>
 
         <div class="form__group">
-            <label for="main_feauture">Nom de la catégorie :</label>
-            <input type="text" name="main_feature" id="main_feauture" required>
+            <label for="category">Nom de la catégorie :</label>
+            <input type="text" name="category" id="category" required>
         </div>
         <button class="btn" type="submit">Ajouter</button>
     </form>

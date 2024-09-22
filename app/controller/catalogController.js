@@ -1,7 +1,7 @@
 const { dataMapper } = require("../database/dataMapper.js");
 
 const catalogController = {
-    showPage: async (req, res) => {
+    index: async (req, res) => {
         const categories = await dataMapper.getCategories();
         const products = await dataMapper.getAllProducts();
         if (!req.session.showAllProduct) {
@@ -12,19 +12,19 @@ const catalogController = {
         }
         res.render("catalog", { products, categories });
     },
-    updateSession: (req, res) => {
+    showAll: (req, res) => {
         if (!req.session.showAllProduct) {
             req.session.showAllProduct = true;
         }
         res.redirect("/catalog");
     },
     showByCategory: async (req, res, next) => {
-        const category = req.query.category;
-        if (category === "all") {
+        const id = req.query.id;
+        if (id === "all") {
             res.redirect("/catalog/all");
             return;
         }
-        const products = await dataMapper.getProductsByCategory(category);
+        const products = await dataMapper.getProductsByCategory(id);
         if (!products) {
             next();
             return;
@@ -32,7 +32,7 @@ const catalogController = {
         const categories = await dataMapper.getCategories();
         res.render("catalog", {
             products,
-            currentCategory: category,
+            currentCategoryId: parseInt(id),
             categories,
         });
     },

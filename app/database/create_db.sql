@@ -1,26 +1,36 @@
-DROP TABLE IF EXISTS coffee;
-DROP TABLE IF EXISTS main_feature;
-DROP TABLE IF EXISTS admin;
+DROP TABLE IF EXISTS "coffee", "category", "user";
 
-CREATE TABLE main_feature (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
+CREATE TABLE "category" (
+    "id" SERIAL PRIMARY KEY,
+    "name" TEXT NOT NULL UNIQUE,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ
 );
 
-CREATE TABLE coffee (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    reference INT NOT NULL UNIQUE,
-    origin TEXT,
-    price_kilo NUMERIC(10, 2) NOT NULL,
-    main_feature_id INT,
-    availability BOOLEAN DEFAULT TRUE,
-    description TEXT,
-    publication_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN kEY (main_feature_id) REFERENCES  main_feature(id)
+CREATE TABLE "coffee" (
+    "id" SERIAL PRIMARY KEY,
+    "name" TEXT NOT NULL,
+    "reference" INT NOT NULL UNIQUE,
+    "origin" TEXT,
+    "price_kilo" NUMERIC(10, 2) NOT NULL,
+    "category_id" INT,
+    "availability" BOOLEAN DEFAULT TRUE,
+    "description" TEXT,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ,
+    FOREIGN KEY ("category_id") REFERENCES "category"("id") ON DELETE CASCADE
 );
 
-INSERT INTO main_feature (name)
+CREATE TABLE "user" (
+    "id" SERIAL PRIMARY KEY,
+    "username" TEXT NOT NULL UNIQUE,
+    "password" TEXT NOT NULL,
+    "role" TEXT NOT NULL DEFAULT 'user',
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMPTZ
+);
+
+INSERT INTO "category" ("name")
 VALUES 
 ('Chocolaté'),
 ('Épicé'),
@@ -29,7 +39,7 @@ VALUES
 ('Doux'),
 ('Acide');
 
-INSERT INTO coffee (name, reference, origin, price_kilo, main_feature_id, description, availability)
+INSERT INTO "coffee" ("name", "reference", "origin", "price_kilo", "category_id", "description", "availability")
 VALUES 
 ('Espresso', 100955890, 'Italie', 20.99, 4, 'Café fort et concentré préparé en faisant passer de l''eau chaude à travers du café finement moulu.', TRUE),
 ('Columbian', 100955894, 'Colombie', 18.75, 6, 'Café moyennement corsé avec une acidité vive et une saveur riche.', TRUE),
@@ -45,7 +55,7 @@ VALUES
 ('Hawaiian Kona', 958090105, 'Hawaï', 55.75, 5, 'Café rare au goût riche, une acidité douce et des nuances subtiles.', FALSE)
 ;
 
-INSERT INTO coffee (name, reference, origin, price_kilo, main_feature_id, description, availability)
+INSERT INTO "coffee" ("name", "reference", "origin", "price_kilo", "category_id", "description", "availability")
 VALUES 
 ('Brazilian Santos', 134009550, 'Brésil', 17.80, 5, 'Café doux et lisse avec un profil de saveur de noisette.', TRUE),
 ('Jamaican Blue Mountain', 589100954, 'Jamaïque', 39.25, 5, 'Reconnu pour sa saveur douce, son acidité vive et son absence d''amertume.', TRUE),
@@ -53,15 +63,12 @@ VALUES
 ('Nicaraguan Maragogipe', 691550753, 'Nicaragua', 28.60, 3, 'Café avec des notes de fruits, une acidité vive et un corps plein.', FALSE)
 ;
 
-CREATE TABLE admin (
-    id SERIAL PRIMARY KEY,
-    username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
-);
 
-INSERT INTO admin (username, password)
+
+INSERT INTO "user" ("username", "password", "role")
 VALUES
-('admin', '$2b$11$B68QJksIfBYDNHesX6egvOQ7knqJ5m9KTmcNK91Un.LxGrhyPjukG');
+('admin', '$2b$11$B68QJksIfBYDNHesX6egvOQ7knqJ5m9KTmcNK91Un.LxGrhyPjukG', 'admin'),
+('toto', '$2b$11$B68QJksIfBYDNHesX6egvOQ7knqJ5m9KTmcNK91Un.LxGrhyPjukG', 'user');
 
 
 

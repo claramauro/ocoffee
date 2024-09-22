@@ -57,8 +57,8 @@ const app = {
         app.formCategory.submit();
     },
     handleFocusOnCardBtn: (e) => {
-        const divContent = e.currentTarget.querySelector(".card__content");
-        divContent.classList.add("up");
+        const card = e.currentTarget;
+        card.classList.add("up");
         // Empecher le transform du hover si le focus au clavier est deja passé sur la card
     },
 };
