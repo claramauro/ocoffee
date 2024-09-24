@@ -8,6 +8,7 @@ const adminController = {
         if (req.session.isAdminConnected) {
             res.redirect("/admin");
         } else {
+            console.log("toto");
             res.render("./admin/login");
         }
     },
@@ -121,6 +122,7 @@ const adminController = {
             next();
             return;
         }
+        // Supprimer les cafés associés et son image
         res.redirect("/admin/categories");
     },
     addCategoryPage: async (req, res) => {

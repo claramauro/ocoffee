@@ -16,6 +16,6 @@ router.use(productRouter);
 router.use(storeRouter);
 
 /**Partie Admin */
-router.use(adminRouter);
+router.use("/admin", adminRouter);
 
 module.exports = { router };
