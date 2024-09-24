@@ -10,7 +10,7 @@
     border-radius: 5px;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 768px) {
     .section__hero {
         display: flex;
         column-gap: 4rem;

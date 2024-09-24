@@ -1,5 +1,5 @@
 .section__banner--store .banner__container::before {
-    background-image: url(../images/store-banner.jpg);
+    background-image: url(../images/store-banner.webp);
 }
 
 .store__address {
