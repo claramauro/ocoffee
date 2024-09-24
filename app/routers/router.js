@@ -6,7 +6,6 @@ const { catalogRouter } = require("./catalogRouter.js");
 const { productRouter } = require("./productRouter.js");
 const { storeRouter } = require("./storeRouter.js");
 const { adminRouter } = require("./adminRouter.js");
-const { isAuth } = require("../middlewares/isAuth.js");
 
 router.use(homeRouter);
 
