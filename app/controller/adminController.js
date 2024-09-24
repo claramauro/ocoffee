@@ -8,7 +8,6 @@ const adminController = {
         if (req.session.isAdminConnected) {
             res.redirect("/admin");
         } else {
-            console.log("toto");
             res.render("./admin/login");
         }
     },

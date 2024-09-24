@@ -1,11 +1,9 @@
 const adminRouter = require("express").Router();
 const { adminController } = require("../controller/adminController.js");
-const { catchError } = require("../middlewares/errorHandlers.js");
 
-const path = require("node:path");
-const multer = require("multer");
+const { catchError } = require("../middlewares/errorHandlers.js");
 const { isAuth } = require("../middlewares/isAuth.js");
-const upload = multer({ dest: path.join(__dirname, "../../public/images/products") });
+const { saveImage } = require("../middlewares/treatImage.js");
 
 adminRouter.get("/login", adminController.loginPage);
 adminRouter.post("/login", catchError(adminController.login));
@@ -17,13 +15,13 @@ adminRouter.get("/logout", adminController.logout);
 adminRouter.get("", catchError(adminController.index));
 
 adminRouter.get("/product/add", adminController.addProductPage);
-adminRouter.post("/product/add", upload.single("image"), catchError(adminController.addProduct));
+adminRouter.post("/product/add", saveImage, catchError(adminController.addProduct));
 
 adminRouter.get("/product/delete/:reference(\\d+)", catchError(adminController.deleteProduct));
 
 adminRouter.get("/product/update/:reference(\\d+)", catchError(adminController.updateProductPage));
 
-adminRouter.post("/product/update/:reference(\\d+)", upload.single("image"), catchError(adminController.updateProduct));
+adminRouter.post("/product/update/:reference(\\d+)", saveImage, catchError(adminController.updateProduct));
 
 adminRouter.get("/categories", catchError(adminController.categoryPage));
 
