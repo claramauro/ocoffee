@@ -32,8 +32,8 @@
                             <% for( product of products) { %>
                                 <li class="card ">
                                     <a class="card__link" href="/product/<%= product.reference %>" title="Voir le produit" aria-label="Aller sur la page du produit"></a>
-                                    <div class="card__img" data-img="/images/<%= product.reference %>.png">
-                                        <img src="/images/products/<%= product.reference %>.png" alt="">
+                                    <div class="card__img" data-img="/images/<%= product.reference %>.webp">
+                                        <img src="/images/products/<%= product.reference %>.webp" alt="">
                                     </div>
                                     <div class="card__content">
                                         <h3 class="card__title"><%= product.name %></h3>
@@ -44,7 +44,7 @@
                                 </li>
                             <% } %>
                         </ul>
-                        <% if (!locals.showAll && locals.currentCategory === undefined) { %>
+                        <% if (!locals.showAll && locals.currentCategoryId === undefined) { %>
                             <a class="btn" id="btn-show-all" href="/catalog/all" title="Afficher tous les produits" aria-label="Afficher tous les produits">Voir tout</a>
                         <% } %>
                     <% } else { %>

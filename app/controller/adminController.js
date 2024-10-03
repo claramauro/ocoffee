@@ -47,9 +47,12 @@ const adminController = {
         res.render("./admin/add-product", { categories });
     },
     addProduct: async (req, res) => {
-        // Renommer l'image téléchargée
-        renameSync(req.file.path, `${req.file.destination}/${Number(req.body.reference)}.png`);
         const product = req.body;
+        // Renommer l'image téléchargée
+        // req.imagePath : propriété ajouté à req dans middleware saveImage.js
+        const newNameFile = `${Number(product.reference)}.webp`;
+        renameSync(req.imagePath, `${path.dirname(req.imagePath)}/${newNameFile}`);
+
         product.availability = product.availability ? true : false;
         const result = await dataMapper.addProduct(product);
         if (!result) {
@@ -68,7 +71,7 @@ const adminController = {
             return;
         }
         // Supprimer l'image
-        unlinkSync(path.join(__dirname, `../../public/images/products/${reference}.png`));
+        unlinkSync(path.join(__dirname, `../../public/images/products/${reference}.webp`));
         res.redirect("/admin");
     },
     updateProductPage: async (req, res, next) => {
@@ -97,13 +100,15 @@ const adminController = {
         }
         if (req.file !== undefined) {
             // Supprimer l'ancienne image
-            unlinkSync(path.join(__dirname, `../../public/images/products/${productToUpdate.reference}.png`));
+            unlinkSync(path.join(__dirname, `../../public/images/products/${productReference}.webp`));
+
             // Renommer la nouvelle image
-            renameSync(req.file.path, `${req.file.destination}/${Number(productToUpdate.reference)}.png`);
+            const newNameFile = `${Number(productToUpdate.reference)}.webp`;
+            renameSync(req.imagePath, `${path.dirname(req.imagePath)}/${newNameFile}`);
         } else if (req.file === undefined && productReference !== Number(productToUpdate.reference)) {
             renameSync(
-                path.join(__dirname, `../../public/images/products/${productReference}.png`),
-                path.join(__dirname, `../../public/images/products/${productToUpdate.reference}.png`)
+                path.join(__dirname, `../../public/images/products/${productReference}.webp`),
+                path.join(__dirname, `../../public/images/products/${productToUpdate.reference}.webp`)
             );
         }
         res.redirect("/admin");

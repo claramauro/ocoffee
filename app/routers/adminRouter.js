@@ -3,7 +3,7 @@ const { adminController } = require("../controller/adminController.js");
 
 const { catchError } = require("../middlewares/errorHandlers.js");
 const { isAuth } = require("../middlewares/isAuth.js");
-const { saveImage } = require("../middlewares/treatImage.js");
+const { convertAndSaveImage } = require("../middlewares/imageUploadHandler.js");
 
 adminRouter.get("/login", adminController.loginPage);
 adminRouter.post("/login", catchError(adminController.login));
@@ -15,13 +15,13 @@ adminRouter.get("/logout", adminController.logout);
 adminRouter.get("/", catchError(adminController.index));
 
 adminRouter.get("/product/add", adminController.addProductPage);
-adminRouter.post("/product/add", saveImage, catchError(adminController.addProduct));
+adminRouter.post("/product/add", convertAndSaveImage, catchError(adminController.addProduct));
 
 adminRouter.get("/product/delete/:reference(\\d+)", catchError(adminController.deleteProduct));
 
 adminRouter.get("/product/update/:reference(\\d+)", catchError(adminController.updateProductPage));
 
-adminRouter.post("/product/update/:reference(\\d+)", saveImage, catchError(adminController.updateProduct));
+adminRouter.post("/product/update/:reference(\\d+)", convertAndSaveImage, catchError(adminController.updateProduct));
 
 adminRouter.get("/categories", catchError(adminController.categoryPage));
 
