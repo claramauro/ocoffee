@@ -12,7 +12,7 @@ adminRouter.use(isAuth);
 
 adminRouter.get("/logout", adminController.logout);
 
-adminRouter.get("", catchError(adminController.index));
+adminRouter.get("/", catchError(adminController.index));
 
 adminRouter.get("/product/add", adminController.addProductPage);
 adminRouter.post("/product/add", saveImage, catchError(adminController.addProduct));

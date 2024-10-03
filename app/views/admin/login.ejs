@@ -10,28 +10,38 @@
 
     <!-- Common CSS Style -->
     <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/common.css" />
 
     <!-- Style -->
-    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/login.css" />
 </head>
-<body class="body--login">
-        <h1>Connexion</h1>
-        <form class="form-login" action="/admin/login" method="POST">
-            <% if (locals.error) { %>
-                <span class="error__message"><%= error %></span>
-            <% } %>
-    
-            <div class="form__group">
-                <label for="username">Nom d'utilisateur :</label>
-                <input type="text" name="username" id="username">
-            </div>
-            <div class="form__group">
-                <label for="password">Mot de passe : </label>
-                <input type="password" name="password" id="password">
-            </div>
-            <button class="btn" type="submit">Se connecter</button>
-        </form>
+
+<body>
+  <header class="header">
+    <a class="header__brand" href="/" title="Page d'accueil">
+        <img class="header__brand__logo" src="/images/logo.svg" alt="Logo de oCoffee" />
+        O'COFFEE
+    </a>
+    <a href="/" class="nav__link">Retour au site de la boutique</a>
+  </header>
+  <main>
+    <h1>Connexion</h1>
+    <form class="form-login" action="/admin/login" method="POST">
+        <% if (locals.error) { %>
+            <span class="error__message"><%= error %></span>
+        <% } %>
+  
+        <div class="form__group">
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div class="form__group">
+            <label for="password">Mot de passe : </label>
+            <input type="password" name="password" id="password">
+        </div>
+        <button class="btn" type="submit">Se connecter</button>
+    </form>
+  </main>
     
 </body>
 </html>
