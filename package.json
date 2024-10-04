@@ -2,15 +2,21 @@
     "name": "ocoffee",
     "version": "1.0.0",
     "description": "Site vitrine de la boutique oCoffee",
-    "main": "index.js",
+    "main": "ocoffee.js",
     "directories": {
         "doc": "docs"
     },
     "scripts": {
         "dev": "nodemon ocoffee.js",
-        "db:reset": "psql -U ocoffee -d ocoffee < app/database/create_db.sql"
+        "db:create": "psql -U ocoffee -d ocoffee < app/database/create_tables.sql",
+        "db:seed": "psql -U ocoffee -d ocoffee < app/database/seed_tables.sql",
+        "db:reset": "npm run db:create && npm run db:seed"
     },
-    "keywords": [],
+    "keywords": [
+        "node.js",
+        "javascript",
+        "express"
+    ],
     "author": "",
     "license": "ISC",
     "dependencies": {
