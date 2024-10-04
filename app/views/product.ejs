@@ -8,18 +8,25 @@
         </section>
         <div class="container">
             <section class="section__product">
-                <div class="product__publication-date">Publié le <time datetime="<%= product.date.year %>-<%= product.date.month %>-<%= product.date.day %>"><%= product.date.day %>/<%= product.date.month %>/<%= product.date.year %></time></div>
-                <h3 class="product__title"><%= product.name %></h3>
-                <div class="product__reference">Référence : <%= product.reference %></div>
-                <div class="product__origin">Origine : <%= product.origin %></div>
-                <p class="product__description"><%= product.description %></p>
-                <div class="product__feature">
-                    Caratéristique principale : <span><%= product.category %></span>
+              <div class="product__infos">
+                <div>
+                  <div class="product__publication-date">Publié le <time datetime="<%= product.date.year %>-<%= product.date.month %>-<%= product.date.day %>"><%= product.date.day %>/<%= product.date.month %>/<%= product.date.year %></time></div>
+                  <h3 class="product__title"><%= product.name %></h3>
+                  <div class="product__reference">Référence : <%= product.reference %></div>
+                  <div class="product__origin">Origine : <%= product.origin %></div>
+                  <p class="product__description"><%= product.description %></p>
+                  <div class="product__feature">
+                      Caratéristique principale : <span><%= product.category %></span>
+                  </div>
+                  <div class="product__price">Prix au kilo : <%= product.price_kilo %>€</div>
                 </div>
-                <div class="product__price">Prix au kilo : <%= product.price_kilo %>€</div>
                 <div class="product__availability <%=product.availability ? 'available' : 'not-available'%>">
                     <%=product.availability ? 'Disponible' : 'Indisponible'%>
                 </div>
+              </div>
+              <div class="product__img">
+                <img src="/images/products/<%= product.reference %>.webp" alt="">
+              </div>
             </section>
 
             <a class="btn" href="/catalog" title="Revenir au catalogue">Retour au catalogue</a>
