@@ -48,19 +48,38 @@ const adminController = {
     },
     addProduct: async (req, res) => {
         const product = req.body;
-        // Renommer l'image téléchargée
-        // req.imagePath : propriété ajouté à req dans middleware saveImage.js
-        const newNameFile = `${Number(product.reference)}.webp`;
-        renameSync(req.imagePath, `${path.dirname(req.imagePath)}/${newNameFile}`);
-
         product.availability = product.availability ? true : false;
-        const result = await dataMapper.addProduct(product);
-        if (!result) {
-            res.render("./admin/add-product", {
-                error: "Une erreur est survenue, impossible d'ajouter le produit.",
-            });
-        } else {
-            res.redirect("/admin");
+        try {
+            const result = await dataMapper.addProduct(product);
+            if (!result) {
+                // Supprimer l'image téléchargée
+                unlinkSync(req.imagePath);
+                res.render("./admin/add-product", {
+                    error: "Une erreur est survenue, impossible d'ajouter le produit.",
+                });
+            } else {
+                // Renommer l'image téléchargée
+                // req.imagePath : propriété ajouté à req dans middleware saveImage.js
+                const newNameFile = `${Number(product.reference)}.webp`;
+                renameSync(req.imagePath, `${path.dirname(req.imagePath)}/${newNameFile}`);
+                res.redirect("/admin");
+            }
+        } catch (error) {
+            // Supprimer l'image téléchargée
+            unlinkSync(req.imagePath);
+            if (error.code === "23505") {
+                const categories = await dataMapper.getCategories();
+                // On fourni product pour préremplir le formulaire avec les données soumises
+                res.render("./admin/add-product", {
+                    product,
+                    error: `Un produit avec la référence ${product.reference} existe déja, veuillez modifier la référence`,
+                    categories,
+                });
+            } else {
+                res.render("./admin/add-product", {
+                    error: "Une erreur est survenue, impossible d'ajouter le produit.",
+                });
+            }
         }
     },
     deleteProduct: async (req, res, next) => {
