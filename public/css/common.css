@@ -65,27 +65,28 @@ select {
     font-size: 1rem;
 }
 
-input:focus{
-  outline: auto;
+input:focus {
+    outline: auto;
 }
 
 .btn {
-  background-color: var(--primary);
-  border-radius: 5px;
-  color: var(--tertiary);
-  font-weight: 500;
-  text-transform: uppercase;
-  padding: 0.8em 1em;
-  transition: all 0.3s;
+    background-color: var(--primary);
+    border-radius: 5px;
+    color: var(--tertiary);
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0.8em 1em;
+    transition: all 0.3s;
+    outline: auto;
 }
 
 .btn:hover,
 .btn:focus {
-  background-color: var(--secondary);
+    background-color: var(--secondary);
 }
 
 .btn:focus {
-  outline: 2px solid var(--border);
+    outline: 2px solid var(--border);
 }
 
 .container {
@@ -176,139 +177,136 @@ section:last-child {
     margin-bottom: 0;
 }
 
-
 /* Articles*/
 .articles__list {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
-  row-gap: 2rem;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 2rem;
+    width: 100%;
 }
 
 .card {
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: calc(190px + 2.5rem + 30px);
-  transition: box-shadow 0.3s, transform 0.3s;
-  width: 100%;
-  position: relative;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(190px + 2.5rem + 30px);
+    transition: box-shadow 0.3s, transform 0.3s;
+    width: 100%;
+    position: relative;
 }
 
 .card:hover,
 .card:focus-within {
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
-      rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-  transform: scale(1.05);
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    transform: scale(1.05);
 }
 
 .card__title {
-  margin-bottom: 1rem;
-  z-index: 2;
-  width: max-content;
+    margin-bottom: 1rem;
+    z-index: 2;
+    width: max-content;
 }
 
 .card__content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1 0 auto;
-  padding: 1.5rem 1rem;
-  transition: transform 0.5s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1 0 auto;
+    padding: 1.5rem 1rem;
+    transition: transform 0.5s;
 
-  z-index: 1;
-  background-color: #fff;
-  width: 100%;
-  transform: translateY(0);
+    z-index: 1;
+    background-color: #fff;
+    width: 100%;
+    transform: translateY(0);
 }
 
 .card__img {
-  width: 100%;
-  height: 190px;
+    width: 100%;
+    height: 190px;
 }
 
 .card__img img {
-  width: 100%;
-  height: 190px;
-  object-fit: cover;
-  object-position: center;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    object-position: center;
 }
 
 /* Classe .up gérée en JS */
 .card:hover .card__content:not(.up),
 .card__link:focus ~ .card__content {
-  transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .card__info {
-  flex-grow: 1;
-  font-style: italic;
-  margin-bottom: 1rem;
-  text-align: start;
+    flex-grow: 1;
+    font-style: italic;
+    margin-bottom: 1rem;
+    text-align: start;
 }
 
 /* Toute la carte est cliquable */
 .card__link {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
 }
 
 /* Banner */
 .banner__container {
-  position: relative;
-  height: 350px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: relative;
+    height: 350px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Ajoute l'image en bg avec opacité sans que l'opacité n'impacte aussi le titre */
 .banner__container::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: url(../images/catalogue-banner.webp);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: -1; /* bg-image en-dessous de l'image et du titre */
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url(../images/catalogue-banner.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1; /* bg-image en-dessous de l'image et du titre */
 }
 
 .banner__container::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: rgb(51 25 7 / 36%);
-  z-index: 1; /* Filtre au-dessus de l'image mais en-dessous du titre */
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgb(51 25 7 / 36%);
+    z-index: 1; /* Filtre au-dessus de l'image mais en-dessous du titre */
 }
 
 .banner__title {
-  position: relative;
-  z-index: 2;
-  color: var(--tertiary);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-size: 2rem;
-  align-self: auto; /* Annuler le align-self : flex-start sur les h2*/
+    position: relative;
+    z-index: 2;
+    color: var(--tertiary);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 2rem;
+    align-self: auto; /* Annuler le align-self : flex-start sur les h2*/
 }
-
 
 footer {
     color: #fff;
@@ -338,9 +336,9 @@ footer p {
 }
 
 @media (min-width: 650px) {
-  .card {
-      width: 60%;
-  }
+    .card {
+        width: 60%;
+    }
 }
 
 @media (min-width: 992px) {
@@ -366,15 +364,13 @@ footer p {
     }
 
     .articles__list {
-      flex-direction: row;
-      align-items: stretch;
-      column-gap: 2rem;
+        flex-direction: row;
+        align-items: stretch;
+        column-gap: 2rem;
     }
 
     .card {
-        width: calc(
-            100% / 3 - (2rem * 2 / 3)
-        ); /*2rem = column-gap de articles__list */
+        width: calc(100% / 3 - (2rem * 2 / 3)); /*2rem = column-gap de articles__list */
     }
 }
 

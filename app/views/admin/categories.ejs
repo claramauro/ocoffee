@@ -22,8 +22,27 @@
                 <% } %>
         </tbody>
     </table>
-    
-</main>
+
+  </main>
+</div>
+
+<div class="modal">
+  <div class="modal__content">
+    <div class="modal__header">
+      <h2>Etes vous sûr de vouloir supprimer cette catégorie ?</h2>
+      <button type="button" class="btn--close">
+        <img src="/images/close.svg" alt="">
+      </button>
+    </div>
+    <div class="modal__body">
+      <p>Supprimer cette catégorie va aussi supprimer tous les produits appartenant à cette catégorie. </p>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--danger" type="button">Confirmer</button>
+      <button class="btn btn--cancel" type="button">Annuler</button>
+    </div>
+  </div>
+</div>
 
 
 <%- include('./partials/admin-footer') %>

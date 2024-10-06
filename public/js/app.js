@@ -9,14 +9,9 @@ const app = {
         window.addEventListener("resize", app.handleResizeWindow);
 
         app.formCategory = document.querySelector("#form-category");
-        const selectFormCategory = document.querySelector(
-            "#form-category select"
-        );
+        const selectFormCategory = document.querySelector("#form-category select");
         if (selectFormCategory) {
-            selectFormCategory.addEventListener(
-                "change",
-                app.handleOnChangeSelectFormCategory
-            );
+            selectFormCategory.addEventListener("change", app.handleOnChangeSelectFormCategory);
         }
 
         const cards = document.querySelectorAll(".card");
@@ -61,6 +56,8 @@ const app = {
         card.classList.add("up");
         // Empecher le transform du hover si le focus au clavier est deja passé sur la card
     },
+    // PARTIE ADMIN :
+    handleClickOnDeleteCategory: (e) => {},
 };
 
 document.addEventListener("DOMContentLoaded", app.init);
