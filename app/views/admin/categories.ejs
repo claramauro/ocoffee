@@ -19,7 +19,6 @@
                         <td><%= category.total %></td>
                         <td>
                           <button id="js-delete-category-btn" class="table__actions table__actions--delete js-delete-category-btn" data-category-id="<%= category.id %>">Supprimer</button>
-                          <!-- <a class="table__actions table__actions--delete" href="/admin/categories/delete/<%= category.id %>">Supprimer</a> -->
                         </td>
                     </tr>
                 <% } %>
@@ -33,7 +32,7 @@
   <div class="modal__content" >
     <div class="modal__header">
       <h2>Etes vous sûr de vouloir supprimer cette catégorie ?</h2>
-      <button type="button" class="btn--close js-close-modal" aria-label="Fermer la modale">
+      <button type="button" class="btn btn--close js-close-modal" aria-label="Fermer la modale">
         <img src="/images/close.svg" alt="">
       </button>
     </div>
@@ -41,7 +40,7 @@
       <p><strong>Attention !</strong> Supprimer cette catégorie va aussi supprimer tous les produits appartenant à cette catégorie. </p>
     </div>
     <div class="modal__footer">
-      <button class="btn btn--danger" type="button">Confirmer</button>
+      <a id="confirm-delete" class="btn btn--danger" href="#">Supprimer</a>
       <button class="btn btn--cancel js-close-modal" type="button">Annuler</button>
     </div>
   </div>
