@@ -8,9 +8,9 @@ La base de données est gérée avec **PostgreSQL**.
 
 ## Prérequis
 
--   Node.js : version 21
--   PostgreSQL : version 15.7
--   NPM installé : 10.5
+-   Node.js : version 20
+-   PostgreSQL : version 15
+-   NPM installé : version 10
 
 ## Initialisation du projet
 
