@@ -8,7 +8,10 @@
 
             <div class="form__group">
                 <label for="name">Nom du produit :</label>
-                <input type="text" name="name" id="name" required>
+                <input type="text" name="name" id="name" required <% if (locals.product) { %>
+                 value="<%= product.name %>"
+                <% } %>
+                >
             </div>
             <div class="form__group">
                 <label for="reference">Référence : </label>
@@ -16,28 +19,41 @@
             </div>
             <div class="form__group">
                 <label for="origin">Origine : </label>
-                <input type="text" name="origin" id="origin" required>
+                <input type="text" name="origin" id="origin" required <% if (locals.product) { %>
+                  value="<%= product.origin %>"
+                 <% } %>
+                 >
             </div>
             <div class="form__group">
                 <label for="price_kilo">Prix au kilo : </label>
-                <input type="number" name="price_kilo" id="price_kilo" step="0.01" required>
+                <input type="number" name="price_kilo" id="price_kilo" step="0.01" required <% if (locals.product) { %>
+                  value="<%= product.price_kilo %>"
+                 <% } %>
+                 >
             </div>
             <div class="form__group">
                 <label for="category">Caractéristique principale : </label>
                 <select name="category" id="category">
                     <option value="null" disabled>Catégorie</option>
                     <% for( category of categories ) { %>
-                        <option value="<%= category.name %>"><%= category.name %></option>
+                        <option value="<%= category.name %>"
+                          <% if (locals.product && product.category === category.name) { %>
+                            selected
+                           <% } %>
+                           ><%= category.name %></option>
                     <% } %>
                 </select>
             </div>
             <div class="form__group form__group--row">
                 <label for="availability">Disponible : </label>
-                <input type="checkbox" name="availability" id="availability" checked>
+                <input type="checkbox" name="availability" id="availability" <% if (locals.product && product.availability === true) { %>
+                  checked
+                 <% } %>
+                 >
             </div>
             <div class="form__group">
                 <label for="description">Description : </label>
-                <textarea name="description" id="description" required></textarea>
+                <textarea name="description" id="description" required><%= locals.product ? product.description : ""%></textarea>
             </div>
             <div class="form__group">
                 <label for="image">Ajouter l'image :</label>

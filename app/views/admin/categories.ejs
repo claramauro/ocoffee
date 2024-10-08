@@ -17,13 +17,34 @@
                     <tr>
                         <td><%= category.name %></td>
                         <td><%= category.total %></td>
-                        <td><a class="table__actions table__actions--delete" href="/admin/categories/delete/<%= category.id %>">Supprimer</a></td>
+                        <td>
+                          <button id="js-delete-category-btn" class="table__actions table__actions--delete js-delete-category-btn" data-category-id="<%= category.id %>">Supprimer</button>
+                        </td>
                     </tr>
                 <% } %>
         </tbody>
     </table>
-    
-</main>
+
+  </main>
+</div>
+
+<div class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal__content" >
+    <div class="modal__header">
+      <h2>Etes vous sûr de vouloir supprimer cette catégorie ?</h2>
+      <button type="button" class="btn btn--close js-close-modal" aria-label="Fermer la modale">
+        <img src="/images/close.svg" alt="">
+      </button>
+    </div>
+    <div class="modal__body">
+      <p><strong>Attention !</strong> Supprimer cette catégorie va aussi supprimer tous les produits appartenant à cette catégorie. </p>
+    </div>
+    <div class="modal__footer">
+      <a id="confirm-delete" class="btn btn--danger" href="#">Supprimer</a>
+      <button class="btn btn--cancel js-close-modal" type="button">Annuler</button>
+    </div>
+  </div>
+</div>
 
 
 <%- include('./partials/admin-footer') %>

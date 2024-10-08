@@ -20,7 +20,6 @@ h1 {
     text-align: center;
 }
 
-
 .btn {
     background-color: var(--primary);
     border-radius: 5px;
@@ -30,6 +29,7 @@ h1 {
     padding: 0.8em 1em;
     transition: all 0.3s;
     font-size: inherit;
+    outline: auto;
 }
 
 .btn:hover,
@@ -140,12 +140,16 @@ td {
     width: min-content;
 }
 
-.table__actions {
+.table__actions--delete {
     font-weight: bold;
+    font-size: 1rem;
+    color: red;
+    border: none;
+    background-color: inherit;
 }
 
-.table__actions--delete {
-    color: red;
+.table__actions--delete:focus {
+    outline: solid 1px var(--primary);
 }
 
 form {
@@ -194,4 +198,89 @@ textarea {
     width: 100%;
     height: 150px;
     resize: vertical;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+}
+
+.modal__content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    padding: 1rem 0;
+    background-color: #fff;
+    border: 1px solid #a8a7a7;
+    border-radius: 10px;
+    max-height: 300px;
+}
+
+.modal__header {
+    padding: 0 1rem 1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal__body {
+    padding: 1rem;
+    border-top: 1px solid #a8a7a7;
+    border-bottom: 1px solid #a8a7a7;
+}
+
+.modal__body strong {
+    font-weight: bold;
+}
+
+.modal__footer {
+    padding: 1rem 1rem 0;
+}
+
+.modal .btn {
+    color: #fff;
+}
+
+.modal .btn:hover,
+.modal .btn:focus {
+    opacity: 0.6;
+}
+
+.btn--close {
+    padding: 0;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.btn--close:hover {
+    background-color: #fff;
+}
+
+.btn--close:focus {
+    background-color: #fff;
+    border: 1px solid var(--secondary);
+}
+
+.btn--danger,
+.btn--danger:hover,
+.btn--danger:focus {
+    background-color: rgb(203, 23, 23);
+}
+
+.btn--cancel,
+.btn--cancel:hover,
+.btn--cancel:focus {
+    background-color: rgb(163, 161, 161);
+}
+
+.hidden {
+    display: none;
 }
