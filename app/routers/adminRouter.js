@@ -8,7 +8,7 @@ const { convertAndSaveImage } = require("../middlewares/imageUploadHandler.js");
 adminRouter.get("/login", adminController.loginPage);
 adminRouter.post("/login", catchError(adminController.login));
 
-adminRouter.use(isAuth);
+//adminRouter.use(isAuth);
 
 adminRouter.get("/logout", adminController.logout);
 

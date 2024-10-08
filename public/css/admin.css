@@ -140,12 +140,16 @@ td {
     width: min-content;
 }
 
-.table__actions {
+.table__actions--delete {
     font-weight: bold;
+    font-size: 1rem;
+    color: red;
+    border: none;
+    background-color: inherit;
 }
 
-.table__actions--delete {
-    color: red;
+.table__actions--delete:focus {
+    border: solid 1px var(--primary);
 }
 
 form {
@@ -237,6 +241,10 @@ textarea {
     border-bottom: 1px solid #a8a7a7;
 }
 
+.modal__body strong {
+    font-weight: bold;
+}
+
 .modal__footer {
     padding: 1rem 1rem 0;
 }
@@ -273,4 +281,8 @@ textarea {
 
 .btn--close:hover {
     opacity: 0.5;
+}
+
+.hidden {
+    display: none;
 }
