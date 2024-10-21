@@ -56,8 +56,6 @@ const app = {
         card.classList.add("up");
         // Empecher le transform du hover si le focus au clavier est deja passé sur la card
     },
-    // PARTIE ADMIN :
-    handleClickOnDeleteCategory: (e) => {},
 };
 
 document.addEventListener("DOMContentLoaded", app.init);

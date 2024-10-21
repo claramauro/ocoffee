@@ -46,39 +46,30 @@ const adminController = {
         const categories = await dataMapper.getCategories();
         res.render("./admin/add-product", { categories });
     },
-    addProduct: async (req, res) => {
+    addProduct: async (req, res, next) => {
         const product = req.body;
         product.availability = product.availability ? true : false;
         try {
-            const result = await dataMapper.addProduct(product);
-            if (!result) {
-                // Supprimer l'image téléchargée
-                unlinkSync(req.imagePath);
-                res.render("./admin/add-product", {
-                    error: "Une erreur est survenue, impossible d'ajouter le produit.",
-                });
-            } else {
-                // Renommer l'image téléchargée
-                // req.imagePath : propriété ajouté à req dans middleware saveImage.js
-                const newNameFile = `${Number(product.reference)}.webp`;
-                renameSync(req.imagePath, `${path.dirname(req.imagePath)}/${newNameFile}`);
-                res.redirect("/admin");
-            }
+            const addedProduct = await dataMapper.addProduct(product);
+            // Renommer l'image téléchargée
+            // req.imagePath : propriété ajouté à req dans middleware saveImage.js
+            const newNameFile = `${Number(addedProduct.reference)}.webp`;
+            renameSync(req.imagePath, `${path.dirname(req.imagePath)}/${newNameFile}`);
+            res.redirect("/admin");
         } catch (error) {
             // Supprimer l'image téléchargée
             unlinkSync(req.imagePath);
             if (error.code === "23505") {
+                // Erreur si référence produit déjà en base de donnée
                 const categories = await dataMapper.getCategories();
-                // On fourni product pour préremplir le formulaire avec les données soumises
+                // On fourni product pour préremplir le formulaire avec les données déjà soumises
                 res.render("./admin/add-product", {
                     product,
-                    error: `Un produit avec la référence ${product.reference} existe déja, veuillez modifier la référence`,
+                    error: `Un produit avec la référence ${product.reference} existe déjà, veuillez modifier la référence`,
                     categories,
                 });
             } else {
-                res.render("./admin/add-product", {
-                    error: "Une erreur est survenue, impossible d'ajouter le produit.",
-                });
+                next(error);
             }
         }
     },
@@ -107,27 +98,18 @@ const adminController = {
         const productReference = Number(req.params.reference);
         const productToUpdate = req.body;
         productToUpdate.availability = productToUpdate.availability ? true : false;
-        const result = await dataMapper.updateProduct(productReference, productToUpdate);
-        if (!result) {
-            const categories = await dataMapper.getCategories();
-            res.render("./admin/update-product", {
-                error: "Une erreur est survenue, impossible de modifier le produit.",
-                product,
-                categories,
-            });
-            return;
-        }
+        const updatedProduct = await dataMapper.updateProduct(productReference, productToUpdate);
         if (req.file !== undefined) {
             // Supprimer l'ancienne image
             unlinkSync(path.join(__dirname, `../../public/images/products/${productReference}.webp`));
 
             // Renommer la nouvelle image
-            const newNameFile = `${Number(productToUpdate.reference)}.webp`;
+            const newNameFile = `${Number(updatedProduct.reference)}.webp`;
             renameSync(req.imagePath, `${path.dirname(req.imagePath)}/${newNameFile}`);
-        } else if (req.file === undefined && productReference !== Number(productToUpdate.reference)) {
+        } else if (req.file === undefined && productReference !== Number(updatedProduct.reference)) {
             renameSync(
                 path.join(__dirname, `../../public/images/products/${productReference}.webp`),
-                path.join(__dirname, `../../public/images/products/${productToUpdate.reference}.webp`)
+                path.join(__dirname, `../../public/images/products/${updatedProduct.reference}.webp`)
             );
         }
         res.redirect("/admin");
