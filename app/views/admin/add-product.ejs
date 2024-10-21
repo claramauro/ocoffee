@@ -15,7 +15,9 @@
             </div>
             <div class="form__group">
                 <label for="reference">Référence : </label>
-                <input type="number" name="reference" id="reference" max="999999999" placeholder="Référence à 9 chiffres" required>
+                <input type="number" name="reference" id="reference" max="999999999" placeholder="Référence à 9 chiffres" required <% if (locals.product) { %>
+                  value="<%= product.reference %>"
+                 <% } %>>
             </div>
             <div class="form__group">
                 <label for="origin">Origine : </label>

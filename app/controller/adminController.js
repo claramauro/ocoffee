@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const Joi = require("joi");
 const { renameSync, unlinkSync } = require("node:fs");
 const path = require("node:path");
 const { dataMapper } = require("../database/dataMapper.js");
@@ -48,6 +49,39 @@ const adminController = {
     },
     addProduct: async (req, res, next) => {
         const product = req.body;
+        const schema = Joi.object({
+            name: Joi.string().trim().required(),
+            reference: Joi.string()
+                .trim()
+                .pattern(/^\d{9}$/)
+                .required(),
+            origin: Joi.string().trim(),
+            price_kilo: Joi.string()
+                .trim()
+                .pattern(/^\d+([.,]\d+)?$/)
+                .required(),
+            category: Joi.string().trim().required(),
+            availability: Joi.optional(),
+            description: Joi.string().trim().required(),
+        });
+        const { error } = schema.validate(product);
+        const existingProduct = await dataMapper.getOneProduct(product.reference);
+        if (error || existingProduct) {
+            let message;
+            if (existingProduct) {
+                message = `Un produit avec la référence ${product.reference} existe déjà, veuillez modifier la référence.`;
+            } else {
+                message = error.message;
+            }
+            unlinkSync(req.imagePath);
+            const categories = await dataMapper.getCategories();
+            // On fourni product pour préremplir le formulaire avec les données déjà soumises
+            return res.render("./admin/add-product", {
+                product,
+                error: message,
+                categories,
+            });
+        }
         product.availability = product.availability ? true : false;
         try {
             const addedProduct = await dataMapper.addProduct(product);
@@ -59,18 +93,7 @@ const adminController = {
         } catch (error) {
             // Supprimer l'image téléchargée
             unlinkSync(req.imagePath);
-            if (error.code === "23505") {
-                // Erreur si référence produit déjà en base de donnée
-                const categories = await dataMapper.getCategories();
-                // On fourni product pour préremplir le formulaire avec les données déjà soumises
-                res.render("./admin/add-product", {
-                    product,
-                    error: `Un produit avec la référence ${product.reference} existe déjà, veuillez modifier la référence`,
-                    categories,
-                });
-            } else {
-                next(error);
-            }
+            next(error);
         }
     },
     deleteProduct: async (req, res, next) => {
@@ -97,6 +120,34 @@ const adminController = {
     updateProduct: async (req, res) => {
         const productReference = Number(req.params.reference);
         const productToUpdate = req.body;
+        const schema = Joi.object({
+            name: Joi.string().trim().required(),
+            reference: Joi.string()
+                .trim()
+                .pattern(/^\d{9}$/)
+                .required(),
+            origin: Joi.string().trim(),
+            price_kilo: Joi.string()
+                .trim()
+                .pattern(/^\d+([.,]\d+)?$/)
+                .required(),
+            category: Joi.string().trim().required(),
+            availability: Joi.optional(),
+            description: Joi.string().trim().required(),
+        });
+        const { error } = schema.validate(productToUpdate);
+        if (error) {
+            if (req.file !== undefined) {
+                unlinkSync(req.imagePath);
+            }
+            const categories = await dataMapper.getCategories();
+            // On fourni product pour préremplir le formulaire avec les données déjà soumises
+            return res.render("./admin/update-product", {
+                product: productToUpdate,
+                error: error.message,
+                categories,
+            });
+        }
         productToUpdate.availability = productToUpdate.availability ? true : false;
         const updatedProduct = await dataMapper.updateProduct(productReference, productToUpdate);
         if (req.file !== undefined) {
@@ -135,6 +186,11 @@ const adminController = {
     },
     addCategory: async (req, res) => {
         const category = req.body.category;
+        const schema = Joi.string().trim().required();
+        const { error } = schema.validate(category);
+        if (error) {
+            return res.render("./admin/add-category", { error: error.message });
+        }
         const result = await dataMapper.addCategory(category);
         if (!result) {
             res.render("./admin/add-category", {

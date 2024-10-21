@@ -3,9 +3,9 @@ const { client } = require("./client");
 /**
  * @typedef {Object} Product
  * @property {String} name
- * @property {Number} reference
+ * @property {Number|String} reference
  * @property {String} origin
- * @property {Number} price_kilo
+ * @property {Number|String} price_kilo
  * @property {String} category
  * @property {Boolean} availability
  * @property {String} description
@@ -14,7 +14,7 @@ const { client } = require("./client");
 const dataMapper = {
     /**
      * Retourne les n derniers produits ajoutés
-     * @param {Number} nbOfProducts
+     * @param {Number|String} nbOfProducts
      * @returns {Promise<Product[]>} retourne un tableau d'objets Product
      */
     getLatestProducts: async (nbOfProducts) => {
@@ -40,7 +40,7 @@ const dataMapper = {
     },
     /**
      * Retourne le produit correspondant à la référence
-     * @param {Number} reference
+     * @param {Number|String} reference
      * @returns {Promise<Product>|null}
      */
     getOneProduct: async (reference) => {
@@ -167,7 +167,7 @@ const dataMapper = {
     },
     /**
      * Supprime un produit de la BDD selon sa référence
-     * @param {Number} reference
+     * @param {Number|String} reference
      * @returns {Promise<Product|null>}
      */
     deleteProduct: async (reference) => {
@@ -183,7 +183,7 @@ const dataMapper = {
     },
     /**
      * Met à jour un produit de la BDD selon sa référence
-     * @param {Number} productReference référence produit avant modification
+     * @param {Number|String} productReference référence produit avant modification
      * @param {Product} product
      * @returns {Promise<Product|null>}
      */
