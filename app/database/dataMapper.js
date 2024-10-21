@@ -108,7 +108,7 @@ const dataMapper = {
         return result.rows[0];
     },
     /**
-     * Retourne les produit correspodant à la category
+     * Retourne les produit correspondant à la category
      * @param {String} category
      * @returns {Promise<Product|null>} retourne un tableau d'objets Product
      */
@@ -134,32 +134,36 @@ const dataMapper = {
      * @returns {Promise<Product|null>}
      */
     addProduct: async (product) => {
-        const query1 = {
-            text: "SELECT id FROM category WHERE name = $1",
-            values: [product.category],
-        };
-        let result = await client.query(query1);
-        const category_id = result.rows[0].id;
-        const query2 = {
-            text: `
+        try {
+            await client.query("BEGIN");
+            const query1 = {
+                text: "SELECT id FROM category WHERE name = $1",
+                values: [product.category],
+            };
+            let result = await client.query(query1);
+            const category_id = result.rows[0].id;
+            const query2 = {
+                text: `
                 INSERT INTO coffee (name, reference, origin, price_kilo, category_id, availability, description)
                 VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
                 `,
-            values: [
-                product.name,
-                product.reference,
-                product.origin,
-                product.price_kilo,
-                category_id,
-                product.availability,
-                product.description,
-            ],
-        };
-        result = await client.query(query2);
-        if (!result.rows?.length) {
-            return null;
+                values: [
+                    product.name,
+                    product.reference,
+                    product.origin,
+                    product.price_kilo,
+                    category_id,
+                    product.availability,
+                    product.description,
+                ],
+            };
+            result = await client.query(query2);
+            await client.query("COMMIT");
+            return result.rows[0];
+        } catch (error) {
+            await client.query("ROLLBACK");
+            throw error;
         }
-        return result.rows[0];
     },
     /**
      * Supprime un produit de la BDD selon sa référence
@@ -184,34 +188,38 @@ const dataMapper = {
      * @returns {Promise<Product|null>}
      */
     updateProduct: async (productReference, product) => {
-        const query1 = {
-            text: "SELECT id FROM category WHERE name = $1",
-            values: [product.category],
-        };
-        let result = await client.query(query1);
-        const category_id = result.rows[0].id;
-        const query2 = {
-            text: `
-                UPDATE coffee
-                SET name=$1, reference=$2, origin=$3, price_kilo=$4, category_id=$5, availability=$6, description=$7, updated_at=CURRENT_TIMESTAMP
-                WHERE reference=$8 RETURNING *;
-            `,
-            values: [
-                product.name,
-                product.reference,
-                product.origin,
-                product.price_kilo,
-                category_id,
-                product.availability,
-                product.description,
-                productReference,
-            ],
-        };
-        result = await client.query(query2);
-        if (!result.rows?.length) {
-            return null;
+        try {
+            await client.query("BEGIN");
+            const query1 = {
+                text: "SELECT id FROM category WHERE name = $1",
+                values: [product.category],
+            };
+            let result = await client.query(query1);
+            const category_id = result.rows[0].id;
+            const query2 = {
+                text: `
+                  UPDATE coffee
+                  SET name=$1, reference=$2, origin=$3, price_kilo=$4, category_id=$5, availability=$6, description=$7, updated_at=CURRENT_TIMESTAMP
+                  WHERE reference=$8 RETURNING *;
+                `,
+                values: [
+                    product.name,
+                    product.reference,
+                    product.origin,
+                    product.price_kilo,
+                    category_id,
+                    product.availability,
+                    product.description,
+                    productReference,
+                ],
+            };
+            result = await client.query(query2);
+            await client.query("COMMIT");
+            return result.rows[0];
+        } catch (error) {
+            await client.query("ROLLBACK");
+            throw error;
         }
-        return result.rows[0];
     },
     /**
      * Retourne l'user si existe dans la BDD
