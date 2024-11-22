@@ -1,20 +1,18 @@
 const { client } = require("./client");
-
 /**
  * @typedef {Object} Product
  * @property {String} name
- * @property {Number} reference
+ * @property {Number|String} reference
  * @property {String} origin
- * @property {Number} price_kilo
+ * @property {Number|String} price_kilo
  * @property {String} category
  * @property {Boolean} availability
  * @property {String} description
  */
-
 const dataMapper = {
     /**
      * Retourne les n derniers produits ajoutés
-     * @param {Number} nbOfProducts
+     * @param {Number|String} nbOfProducts
      * @returns {Promise<Product[]>} retourne un tableau d'objets Product
      */
     getLatestProducts: async (nbOfProducts) => {
@@ -40,7 +38,7 @@ const dataMapper = {
     },
     /**
      * Retourne le produit correspondant à la référence
-     * @param {Number} reference
+     * @param {Number|String} reference
      * @returns {Promise<Product>|null}
      */
     getOneProduct: async (reference) => {
@@ -131,7 +129,8 @@ const dataMapper = {
     /**
      * Ajoute un produit à la BDD
      * @param {Product} product
-     * @returns {Promise<Product|null>}
+     * @returns {Promise<Product>}
+     * @throws {Error} - Lève une erreur en cas de problème d'insertion ou de transaction.
      */
     addProduct: async (product) => {
         try {
@@ -141,18 +140,19 @@ const dataMapper = {
                 values: [product.category],
             };
             let result = await client.query(query1);
-            const category_id = result.rows[0].id;
+            if (result.rows.length === 0) {
+                throw new Error(`La catégorie ${product.category} n'existe pas`);
+            }
+            const categoryId = result.rows[0].id;
             const query2 = {
-                text: `
-                INSERT INTO coffee (name, reference, origin, price_kilo, category_id, availability, description)
-                VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
-                `,
+                text: ` INSERT INTO coffee (name, reference, origin, price_kilo, category_id, availability, description)
+                VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
                 values: [
                     product.name,
                     product.reference,
                     product.origin,
                     product.price_kilo,
-                    category_id,
+                    categoryId,
                     product.availability,
                     product.description,
                 ],
@@ -167,7 +167,7 @@ const dataMapper = {
     },
     /**
      * Supprime un produit de la BDD selon sa référence
-     * @param {Number} reference
+     * @param {Number|String} reference
      * @returns {Promise<Product|null>}
      */
     deleteProduct: async (reference) => {
@@ -183,7 +183,7 @@ const dataMapper = {
     },
     /**
      * Met à jour un produit de la BDD selon sa référence
-     * @param {Number} productReference référence produit avant modification
+     * @param {Number|String} productReference référence produit avant modification
      * @param {Product} product
      * @returns {Promise<Product|null>}
      */
@@ -195,6 +195,9 @@ const dataMapper = {
                 values: [product.category],
             };
             let result = await client.query(query1);
+            if (result.rows.length === 0) {
+                throw new Error(`La catégorie ${product.category} n'existe pas`);
+            }
             const category_id = result.rows[0].id;
             const query2 = {
                 text: `
