@@ -1,9 +1,9 @@
 const sanitizeHtml = require("sanitize-html");
 
 /**
- * Sanitize all string values in the object
+ * Sanitize les valeurs de type string de l'object
  * @param {Object} object
- * @returns {Object} sanitized object
+ * @returns {Object} l'objet sanitizé
  */
 function sanitizeObject(object) {
     for (let property in object) {

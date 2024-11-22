@@ -44,7 +44,6 @@ const adminController = {
         const products = await dataMapper.getAllProducts();
         res.render("./admin/index", { products });
     },
-
     addProductPage: async (req, res) => {
         const categories = await dataMapper.getCategories();
         res.render("./admin/add-product", { categories });
