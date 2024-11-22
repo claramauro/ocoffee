@@ -1,8 +1,10 @@
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
+const sanitizeHtml = require("sanitize-html");
 const { renameSync, unlinkSync } = require("node:fs");
 const path = require("node:path");
 const { dataMapper } = require("../database/dataMapper.js");
+const { sanitizeObject } = require("../../utils/sanitizeHtml.js");
 
 const adminController = {
     loginPage: (req, res) => {
@@ -77,14 +79,14 @@ const adminController = {
             const categories = await dataMapper.getCategories();
             // On fourni product pour préremplir le formulaire avec les données déjà soumises
             return res.render("./admin/add-product", {
-                product,
+                product: sanitizeObject(product),
                 error: message,
                 categories,
             });
         }
         product.availability = product.availability ? true : false;
         try {
-            const addedProduct = await dataMapper.addProduct(product);
+            const addedProduct = await dataMapper.addProduct(sanitizeObject(product));
             // Renommer l'image téléchargée
             // req.imagePath : propriété ajouté à req dans middleware saveImage.js
             const newNameFile = `${Number(addedProduct.reference)}.webp`;
@@ -143,13 +145,13 @@ const adminController = {
             const categories = await dataMapper.getCategories();
             // On fourni product pour préremplir le formulaire avec les données déjà soumises
             return res.render("./admin/update-product", {
-                product: productToUpdate,
+                product: sanitizeObject(productToUpdate),
                 error: error.message,
                 categories,
             });
         }
         productToUpdate.availability = productToUpdate.availability ? true : false;
-        const updatedProduct = await dataMapper.updateProduct(productReference, productToUpdate);
+        const updatedProduct = await dataMapper.updateProduct(productReference, sanitizeObject(productToUpdate));
         if (req.file !== undefined) {
             // Supprimer l'ancienne image
             unlinkSync(path.join(__dirname, `../../public/images/products/${productReference}.webp`));
@@ -185,12 +187,13 @@ const adminController = {
         res.render("./admin/add-category");
     },
     addCategory: async (req, res) => {
-        const category = req.body.category;
+        let category = req.body.category;
         const schema = Joi.string().trim().required();
         const { error } = schema.validate(category);
         if (error) {
             return res.render("./admin/add-category", { error: error.message });
         }
+        category = sanitizeHtml(category, { allowedTags: [], allowedAttributes: [] });
         const result = await dataMapper.addCategory(category);
         if (!result) {
             res.render("./admin/add-category", {

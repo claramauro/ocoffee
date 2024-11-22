@@ -1,5 +1,4 @@
 const { client } = require("./client");
-
 /**
  * @typedef {Object} Product
  * @property {String} name
@@ -10,7 +9,6 @@ const { client } = require("./client");
  * @property {Boolean} availability
  * @property {String} description
  */
-
 const dataMapper = {
     /**
      * Retourne les n derniers produits ajoutés
@@ -131,7 +129,8 @@ const dataMapper = {
     /**
      * Ajoute un produit à la BDD
      * @param {Product} product
-     * @returns {Promise<Product|null>}
+     * @returns {Promise<Product>}
+     * @throws {Error} - Lève une erreur en cas de problème d'insertion ou de transaction.
      */
     addProduct: async (product) => {
         try {
@@ -141,18 +140,19 @@ const dataMapper = {
                 values: [product.category],
             };
             let result = await client.query(query1);
-            const category_id = result.rows[0].id;
+            if (result.rows.length === 0) {
+                throw new Error(`La catégorie ${product.category} n'existe pas`);
+            }
+            const categoryId = result.rows[0].id;
             const query2 = {
-                text: `
-                INSERT INTO coffee (name, reference, origin, price_kilo, category_id, availability, description)
-                VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
-                `,
+                text: ` INSERT INTO coffee (name, reference, origin, price_kilo, category_id, availability, description)
+                VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`,
                 values: [
                     product.name,
                     product.reference,
                     product.origin,
                     product.price_kilo,
-                    category_id,
+                    categoryId,
                     product.availability,
                     product.description,
                 ],
@@ -195,6 +195,9 @@ const dataMapper = {
                 values: [product.category],
             };
             let result = await client.query(query1);
+            if (result.rows.length === 0) {
+                throw new Error(`La catégorie ${product.category} n'existe pas`);
+            }
             const category_id = result.rows[0].id;
             const query2 = {
                 text: `
